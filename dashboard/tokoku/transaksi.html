@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Transaksi - by walletku.biz.id</title>
+    <link rel="canonical" href="https://walletku.biz.id/dashboard/tokoku/transaksi.html">
+    <meta property="og:url" content="https://walletku.biz.id/dashboard/tokoku/transaksi.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="description" content="Mulai mengelola pemasukan dan pengeluaran-mu dengan mudah. dengan fitur backup export dan import dan mengelola aplikasi toko">
+    <meta property="og:image" content="https://walletku.biz.id/assets/img/SEO/og1@2x.webp">
+    <link rel="icon" type="image/png" sizes="484x484" href="../../assets/img/SEO/icon-wallet.webp">
+    <link rel="icon" type="image/png" sizes="484x484" href="../../assets/img/SEO/icon-wallet.webp" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="484x484" href="../../assets/img/SEO/icon-wallet.webp">
+    <link rel="icon" type="image/png" sizes="484x484" href="../../assets/img/SEO/icon-wallet.webp" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="484x484" href="../../assets/img/SEO/icon-wallet.webp">
+    <link rel="icon" type="image/png" sizes="484x484" href="../../assets/img/SEO/icon-wallet.webp">
+    <link rel="icon" type="image/png" sizes="484x484" href="../../assets/img/SEO/icon-wallet.webp">
+    <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="manifest" href="../../manifest.json" crossorigin="use-credentials">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../../assets/css/aos.min.css">
+    <link rel="stylesheet" href="../../assets/css/animate.min.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard-app/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard-app/Pricing-Duo-badges.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard-app/Pricing-Duo-icons.css">
+    <link rel="stylesheet" href="../../assets/css/tokoku/transaksi.css">
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://apis.google.com/js/api.js" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+</head>
+
+<body id="page-top">
+    <div class="offcanvas offcanvas-start bg-body" tabindex="-1" id="offcanvas-menu" style="border-top-right-radius: 16px;border-bottom-right-radius: 16px;box-shadow: 40px 0px 20px 0px rgba(0,0,0,0.11);width: 290px;height: auto;">
+        <div class="offcanvas-header justify-content-between mb-4 topbar" style="padding-left: 22px;"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="index.html" style="height: auto;">
+                <div class="bounce animated infinite sidebar-brand-icon rotate-n-15"><i class="fas fa-store text-primary" style="font-size: 23px;"></i></div>
+                <div class="sidebar-brand-text" style="margin-left: 10px;"><span class="text-primary" style="font-family: Nunito, sans-serif;font-weight: bold;font-size: 20px;">TokoKu</span></div>
+            </a><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" type="button" aria-label="Close" data-bs-dismiss="offcanvas" style="font-size: 34px;color: rgb(78,115,223);box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-width: 2px;border-style: solid;border-radius: 16px;">
+                <path d="M16.3394 9.32245C16.7434 8.94589 16.7657 8.31312 16.3891 7.90911C16.0126 7.50509 15.3798 7.48283 14.9758 7.85938L12.0497 10.5866L9.32245 7.66048C8.94589 7.25647 8.31312 7.23421 7.90911 7.61076C7.50509 7.98731 7.48283 8.62008 7.85938 9.0241L10.5866 11.9502L7.66048 14.6775C7.25647 15.054 7.23421 15.6868 7.61076 16.0908C7.98731 16.4948 8.62008 16.5171 9.0241 16.1405L11.9502 13.4133L14.6775 16.3394C15.054 16.7434 15.6868 16.7657 16.0908 16.3891C16.4948 16.0126 16.5171 15.3798 16.1405 14.9758L13.4133 12.0497L16.3394 9.32245Z" fill="currentColor"></path>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" fill="currentColor"></path>
+            </svg></div>
+        <div class="offcanvas-body d-flex flex-column justify-content-between" style="overflow: hidden;overflow-y: scroll;">
+            <div>
+                <ul class="nav flex-column mb-auto">
+                    <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="index.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent"><i class="fas fa-store me-2"></i> TokoKu</a></li>
+                    <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="transaksi.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent"><i class="fas fa-money-bill-wave me-2"></i> Transaksi</a></li>
+                    <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="nota.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent"><i class="fas fa-file-invoice-dollar me-2"></i> Nota</a></li>
+                    <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="item.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent"><i class="fas fa-box me-2"></i> Produk</a></li>
+                    <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="laporan.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent"><i class="fas fa-chart-bar me-2"></i> Laporan</a></li>
+                    <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="toko.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent"><i class="fas fa-store me-2"></i> Profile TokoKu</a></li>
+                    <li class="nav-item pulse animated infinite" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="../walletku/index.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent" rel="prev"><i class="fas fa-wallet me-2"></i> WalletKu</a></li>
+                </ul>
+            </div>
+            <div class="d-flex flex-column" style="width: 100%;"><input class="d-none d-flex" type="file" id="fileImport" style="font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;border-radius: 16px;"></div>
+            <div>
+                <ul class="nav d-flex justify-content-between">
+                    <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #650000;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border: 2px solid rgb(171,5,5) ;"><a class="nav-link" aria-current="page" href="../../index.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" onclick="localStorage.removeItem(&#39;userData&#39;)" rel="prev"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-logout-2 me-2">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2"></path>
+                                <path d="M15 12h-12l3 -3"></path>
+                                <path d="M6 15l-3 -3"></path>
+                            </svg> Logout</a></li>
+                </ul>
+            </div>
+            <div>
+                <hr>
+                <div><span><strong>Versi release</strong></span></div>
+            </div>
+        </div>
+    </div>
+    <div id="wrapper" style="padding-top: 86px;">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-expand fixed-top d-flex topbar" style="background: rgba(255,255,255,0.49);backdrop-filter: opacity(1) blur(6px);-webkit-backdrop-filter: opacity(1) blur(6px);margin-bottom: 0px;margin-top: 5px;margin-right: 5px;margin-left: 5px;border-radius: 16px;box-shadow: 0px 3px 20px rgba(177,177,177,0.84);border: 3px solid rgba(255,255,255,0.29);">
+                    <div class="container"><button class="btn btn-link rounded-circle me-3" id="sidebarToggleTop" type="button" data-bs-target="#offcanvas-menu" data-bs-toggle="offcanvas" style="color: rgb(255,255,255);background: #4e73df;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-width: 2px;border-style: solid;border-radius: 16px;"><i class="fas fa-bars"></i></button>
+                        <ul class="navbar-nav flex-nowrap ms-auto">
+                            <li class="nav-item dropdown no-arrow mx-1"><a class="nav-link" href="berlangganan.html"><img class="pulse animated infinite" style="width: auto;height: 31px;" src="../../assets/img/diamond.gif"></a></li>
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter" style="transform: translateX(0px) translateY(-11px) translateZ(0px);">2</span><span class="badge bg-danger badge-counter premium2" style="transform: translateX(0px) translateY(-11px) translateZ(0px);">3</span><i class="fas fa-bell fa-fw" style="color: rgb(67,97,238);font-size: 21px;"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in" style="border-radius: 16px;box-shadow: 0px 4px 20px 3px rgba(0,0,0,0.16);">
+                                        <h6 class="dropdown-header" style="font-family: Nunito, sans-serif;font-size: 16px;">Pemberitahuan</h6><a class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="d-flex">
+                                                <div><span class="small" style="color: rgb(88,88,94);">Bot</span>
+                                                    <p style="color: rgb(67,68,74);">Laporkan keuangan mu dari pemasukan dan pengeluaran dengan mudah!</p>
+                                                </div>
+                                            </div>
+                                        </a><a class="dropdown-item align-items-center premium2" href="#">
+                                            <div class="d-flex">
+                                                <div><span class="small" style="color: rgb(88,88,94);">Bot</span>
+                                                    <p style="color: rgb(67,68,74);">Anda belum berlangganan. silahkan berlangganan untuk akses fitur premium</p>
+                                                </div>
+                                            </div>
+                                        </a><a class="dropdown-item align-items-center" href="#">
+                                            <div class="d-flex">
+                                                <div class="d-flex flex-column"><span class="small" style="color: rgb(88,88,94);">Bot</span><span class="small" style="color: rgb(88,88,94);">Anda menggunakan versi terbaru</span>
+                                                    <div style="margin-bottom: 10px;overflow: scroll;overflow-x: hidden;height: 250px;">
+                                                        <div>
+                                                            <h3 style="font-size: 16px;font-family: Nunito, sans-serif;color: #322f2f;font-weight: bold;margin-bottom: 0px;">3.0.0.5</h3>
+                                                            <p style="font-size: 16px;font-family: Nunito, sans-serif;margin-bottom: 0px;"><span style="font-weight: normal !important;">Apa sih yang baru?</span></p>
+                                                            <ul>
+                                                                <li style="font-family: Nunito, sans-serif;">Update Fix analytic</li>
+                                                                <li style="font-family: Nunito, sans-serif;">Fix bug halaman laporan, nota dan transaksi</li>
+                                                                <li style="font-family: Nunito, sans-serif;">Halaman Nota, memperbaiki tanggal</li>
+                                                                <li style="font-family: Nunito, sans-serif;">Halaman transaksi, memperbaiki tanggal</li>
+                                                                <li style="font-family: Nunito, sans-serif;">Halaman laporan, memperbaiki chart tranding penjualan&nbsp;<span class="badge" style="background: linear-gradient(-135deg, #2b00a6 0%, #5a5fd3 48%, rgb(33,10,174) 100%);text-shadow: 0px 1px 2px rgb(0,0,0);box-shadow: 0px 3px rgb(64,57,190);color: rgb(255,255,255);font-style: italic;">BARU!</span></li>
+                                                                <li style="font-family: Nunito, sans-serif;">Format tanggal telah di update&nbsp;<span class="badge" style="background: linear-gradient(-135deg, #2b00a6 0%, #5a5fd3 48%, rgb(33,10,174) 100%);text-shadow: 0px 1px 2px rgb(0,0,0);box-shadow: 0px 3px rgb(64,57,190);color: rgb(255,255,255);font-style: italic;">BARU!</span></li>
+                                                                <li style="font-family: Nunito, sans-serif;">Kategori produk sudah di tambahkan&nbsp;</li>
+                                                            </ul>
+                                                            <h3 style="font-size: 16px;font-family: Nunito, sans-serif;color: #322f2f;font-weight: bold;margin-bottom: 0px;">2.9.0.1</h3>
+                                                            <p style="font-size: 16px;font-family: Nunito, sans-serif;margin-bottom: 0px;"><span style="font-weight: normal !important;">Apa sih yang baru?</span></p>
+                                                            <ul>
+                                                                <li style="font-family: Nunito, sans-serif;">Update produk yang dapat di tambahkan unlimited.</li>
+                                                                <li style="font-family: Nunito, sans-serif;">Laporan yang dapat di lihat dari harian, mingguan, bulanan dan tahunan untuk pengguna&nbsp;<span class="badge bg-primary" style="background: linear-gradient(-135deg, #ffd600 0%, #eee756 48%, rgb(255,214,0) 100%);text-shadow: 0px 1px 2px rgb(0,0,0);box-shadow: 0px 3px rgb(204,159,0);color: rgb(255,255,255);font-style: italic;">PREMIUM</span>&nbsp;</li>
+                                                                <li style="font-family: Nunito, sans-serif;">Update perhitungan kunjungan dan produk yang sedang ramai di beli.</li>
+                                                                <li style="font-family: Nunito, sans-serif;">Nota digital yang eyecatching 😍</li>
+                                                            </ul>
+                                                            <div style="margin-bottom: 10px;">
+                                                                <h3 style="font-size: 16px;font-family: Nunito, sans-serif;color: #322f2f;font-weight: bold;margin-bottom: 0px;">1.9.0.1</h3>
+                                                                <p style="font-size: 16px;font-family: Nunito, sans-serif;margin-bottom: 0px;"><span style="font-weight: normal !important;">Apa sih yang baru?</span></p>
+                                                                <ul>
+                                                                    <li style="font-family: Nunito, sans-serif;">Fitur import dan export untuk pengguna&nbsp;<span class="badge bg-primary" style="background: linear-gradient(-135deg, #ffd600 0%, #eee756 48%, rgb(255,214,0) 100%);text-shadow: 0px 1px 2px rgb(0,0,0);box-shadow: 0px 3px rgb(204,159,0);color: rgb(255,255,255);font-style: italic;">PREMIUM</span>&nbsp;</li>
+                                                                    <li style="font-family: Nunito, sans-serif;">Menghitung laba keseluruhan dan bulanan</li>
+                                                                    <li style="font-family: Nunito, sans-serif;">Nota yang dapat di cetak ulang</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter" style="transform: translateX(0px) translateY(-11px) translateZ(0px);">2</span><i class="fas fa-file-import fa-fw" style="color: rgb(67,97,238);font-size: 21px;"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in" style="border-radius: 16px;box-shadow: 0px 4px 20px 3px rgba(0,0,0,0.16);">
+                                        <h6 class="dropdown-header" style="font-family: Nunito, sans-serif;font-size: 16px;">Backup data kamu</h6><a class="dropdown-item d-flex align-items-center premium" id="btnImport" href="#" data-bs-target="#importModal" data-bs-toggle="modal" style="font-family: Nunito, sans-serif;">
+                                            <div class="dropdown-list-image me-3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-down-left-circle-fill" style="width: 40px;height: 40px;color: #3b9c00;">
+                                                    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-5.904-2.803a.5.5 0 1 1 .707.707L6.707 10h2.768a.5.5 0 0 1 0 1H5.5a.5.5 0 0 1-.5-.5V6.525a.5.5 0 0 1 1 0v2.768l4.096-4.096z"></path>
+                                                </svg></div>
+                                            <div class="fw-bold">
+                                                <div class="text-truncate"><span style="font-family: Nunito, sans-serif;color: #3b9c00;">Import Data</span></div>
+                                                <p class="small text-gray-500 mb-0" style="font-family: Nunito, sans-serif;color: #3b9c00;">Format.Json</p>
+                                            </div>
+                                        </a><a class="dropdown-item d-flex align-items-center premium" id="btnBackup" href="#" style="font-family: Nunito, sans-serif;">
+                                            <div class="dropdown-list-image me-3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="width: 40px;height: 40px;color: #cf4545;">
+                                                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                                </svg></div>
+                                            <div class="fw-bold">
+                                                <div class="text-truncate"><span style="font-family: Nunito, sans-serif;color: #cf4545;">Export Data</span></div>
+                                                <p class="small text-gray-500 mb-0" style="font-family: Nunito, sans-serif;color: #cf4545;">Format.Json</p>
+                                            </div>
+                                        </a><a class="dropdown-item d-flex align-items-center premium" id="btnReset" href="#" style="font-family: Nunito, sans-serif;">
+                                            <div class="dropdown-list-image me-3"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-trash-fill" style="width: 40px;height: 40px;color: #cf4545;">
+                                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"></path>
+                                                </svg></div>
+                                            <div class="fw-bold">
+                                                <div class="text-truncate"><span style="font-family: Nunito, sans-serif;color: #cf4545;">Hapus Data</span></div>
+                                                <p class="small text-gray-500 mb-0" style="font-family: Nunito, sans-serif;color: #cf4545;">Hapus semua data</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
+                            </li>
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                            <li class="nav-item dropdown no-arrow">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2" style="font-family: Nunito, sans-serif;color: rgb(0,0,0);font-weight: bold;"><span style="font-weight: normal !important;">Halo!&nbsp;</span><span class="d-none d-lg-inline username" style="font-family: Nunito, sans-serif;margin-right: 0px;">User</span></span><img class="border rounded-circle img-profile" src="../../assets/img/icon/image3.jpeg"></a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in" style="border-radius: 16px;border: 2px solid rgb(225,225,230) ;"><a class="dropdown-item" href="#" style="padding-top: 8px;padding-bottom: 8px;color: rgb(40,40,40);font-family: Nunito, sans-serif;font-weight: bold;" data-bs-target="#profile-user" data-bs-toggle="modal"><i class="fas fa-user fa-sm fa-fw me-2" style="color: rgb(40,40,81);"></i>&nbsp;Profile</a>
+                                        <div class="dropdown-divider"></div><a class="dropdown-item" style="padding-top: 8px;padding-bottom: 8px;color: rgb(40,40,40);font-family: Nunito, sans-serif;font-weight: bold;" onclick="localStorage.removeItem(&#39;userData&#39;)" href="../../index.html" rel="prev"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2" style="color: rgb(40,40,81);"></i>&nbsp;Logout</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="container-fluid paddingAll">
+                    <div class="card shadow d-flex justify-content-start align-items-center justify-content-xxl-start" style="border-radius: 16px;">
+                        <div class="d-flex flex-column justify-content-start app-container" style="width: 100%;margin: 0px;padding-right: 16px;padding-left: 16px;padding-top: 16px;">
+                            <div class="alert alert-primary align-items-start alert-dismissible premium2" role="alert" id="alert" style="background: linear-gradient(15deg, #aa0000 12%, rgb(231,22,22) 49%, #ff5353 85%), #ff5f55;border-radius: 16px;width: 100%;"><button class="btn-close btn-close-white" type="button" aria-label="Close" data-bs-dismiss="alert"></button>
+                                <div class="d-flex justify-content-between"><span class="text-light" aria-hidden="&quot;true&quot;>&amp;times;" style="font-size: 16px;font-family: Nunito, sans-serif;"><span style="font-weight: normal !important;">Akun anda&nbsp;</span><span class="status" aria-hidden="&quot;true&quot;>&amp;times;" style="color: rgb(250,255,0);"><span style="font-weight: normal !important;">Status</span></span><span style="font-weight: normal !important;">, anda tidak dapat menikmati fitur premium. cek&nbsp;</span><a class="alert-link link-light" href="berlangganan.html"><span style="font-weight: normal !important;">disini</span></a></span></div>
+                            </div>
+                            <div class="alert alert-primary align-items-start alert-dismissible" role="alert" id="alert2" style="background: linear-gradient(15deg, #4a11a7 12%, rgb(99,84,186) 50%, rgb(57,11,175) 90%), #ff5f55;border-radius: 16px;"><button class="btn-close btn-close-white" type="button" aria-label="Close" data-bs-dismiss="alert"></button>
+                                <div class="d-flex justify-content-between"><span class="text-light" aria-hidden="&quot;true&quot;>&amp;times;" style="font-size: 16px;">Setelah transaksi, di mohon untuk me-refresh halaman</span></div>
+                            </div><style>
+        body {
+            background-color: #f4f6f9;
+        }
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            padding-top: 2rem;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #struk, #struk * {
+                visibility: visible;
+            }
+            #struk {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+        @media print {
+    body * {
+        visibility: hidden;
+    }
+    #strukPembayaran, #strukPembayaran * {
+        visibility: visible;
+    }
+    #strukPembayaran {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+    }
+}
+    </style>
+                            <div class="row d-flex flex-column align-items-start flex-sm-column flex-md-row flex-lg-row flex-xl-row flex-xxl-row produk01" style="gap: 16px;">
+                                <div class="col-md-8 col-lg-8 col-xl-8 col-xxl-8 d-flex flex-column flex-sm-column flex-md-column flex-lg-column flex-xl-column flex-xxl-column" style="gap: 16px;margin-bottom: 30px;padding: 0px;">
+                                    <div class="d-flex flex-column flex-sm-column summary-card total-balance paddingAll" style="gap: 16px;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-left-width: 5px;border-radius: 16px;margin-bottom: 0px;width: 100%;">
+                                        <div class="d-flex flex-nowrap" style="width: 100%;"><button class="btn btn-primary text-nowrap text-start d-xxl-flex justify-content-center align-items-center d-flex" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;border-top-right-radius: 0px;border-bottom-right-radius: 0px;"><i class="fas fa-search" style="margin-right: 10px;"></i> Cari</button><input type="text" id="cariProduk" style="border-radius: 16px;width: 100%;padding-top: 6px;padding-bottom: 6px;padding-right: 12px;padding-left: 12px;border-top-left-radius: 0px;border-bottom-left-radius: 0px;border: 2px solid rgb(78,115,223) ;" placeholder="Cari produk"></div>
+                                        <div class="d-flex justify-content-between"><button class="btn btn-primary text-nowrap text-start d-xxl-flex justify-content-center align-items-center d-flex" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;" data-bs-toggle="modal" data-bs-target="#modalTambahProduk"><i class="fas fa-plus" style="margin-right: 10px;"></i>Produk</button><a class="btn btn-primary text-nowrap text-start d-print-none d-lg-none d-xl-none d-xxl-none justify-content-center align-items-center d-flex" role="button" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;" href="#keranjangku"><i class="fas fa-shopping-basket" style="margin-right: 10px;"></i> Keranjang</a></div>
+                                    </div>
+                                    <div class="d-flex summary-card total-balance row paddingAll" id="daftarProduk" style="box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-left-width: 5px;border-radius: 16px;margin-bottom: 0px;width: 100%;margin-left: 0px;margin-right: 0px;padding: 5px;"></div>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 d-flex flex-column" style="gap: 16px;margin-bottom: 30px;padding: 0px;">
+                                    <div class="d-flex flex-column summary-card total-balance paddingAll" id="keranjangku" style="gap: 16px;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-left-width: 5px;border-radius: 16px;margin-bottom: 0px;width: 100%;"><button class="btn btn-primary d-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-start d-flex" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;"><i class="fas fa-shopping-basket" style="margin-right: 10px;"></i>Keranjang</button>
+                                        <ul class="list-group" id="keranjang">
+                                            <li class="list-group-item"><span>Belum ada produk, klik <i class="fas fa-plus-circle"></i>&nbsp;tambahkan produk untuk menambahkan produk.</span></li>
+                                        </ul><button class="btn btn-primary text-start d-flex d-xxl-flex justify-content-center align-items-center pulse animated infinite d-flex" id="btnProsesPembayaran" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;"><i class="fas fa-cash-register" style="margin-right: 10px;"></i> Proses Pembayaran</button>
+                                        <div class="d-flex justify-content-between"><span>Total Harga</span><span class="pulse animated infinite" id="totalHarga">Rp</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" role="dialog" tabindex="-1" id="profile-user">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-between">
+                                        <h4 class="modal-title" style="color: rgb(40,40,40);font-family: Nunito, sans-serif;font-weight: bold;font-size: 20px;"></h4><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" type="button" aria-label="Close" data-bs-dismiss="modal" style="font-size: 34px;color: rgb(78,115,223);box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-width: 2px;border-style: solid;border-radius: 16px;">
+                                            <path d="M16.3394 9.32245C16.7434 8.94589 16.7657 8.31312 16.3891 7.90911C16.0126 7.50509 15.3798 7.48283 14.9758 7.85938L12.0497 10.5866L9.32245 7.66048C8.94589 7.25647 8.31312 7.23421 7.90911 7.61076C7.50509 7.98731 7.48283 8.62008 7.85938 9.0241L10.5866 11.9502L7.66048 14.6775C7.25647 15.054 7.23421 15.6868 7.61076 16.0908C7.98731 16.4948 8.62008 16.5171 9.0241 16.1405L11.9502 13.4133L14.6775 16.3394C15.054 16.7434 15.6868 16.7657 16.0908 16.3891C16.4948 16.0126 16.5171 15.3798 16.1405 14.9758L13.4133 12.0497L16.3394 9.32245Z" fill="currentColor"></path>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Data profile</th>
+                                                        <th style="color: rgb(255,255,255);">----------------------------</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Username</td>
+                                                        <td class="username">user</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Email</td>
+                                                        <td class="email">Email</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Status</td>
+                                                        <td class="status">status</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" role="dialog" tabindex="-1" id="modalTambahProduk">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-between">
+                                        <h4 class="modal-title" style="color: rgb(40,40,40);font-family: Nunito, sans-serif;font-weight: bold;font-size: 20px;">Tambah Produk Baru</h4><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" type="button" aria-label="Close" data-bs-dismiss="modal" style="font-size: 34px;color: rgb(78,115,223);box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-width: 2px;border-style: solid;border-radius: 16px;">
+                                            <path d="M16.3394 9.32245C16.7434 8.94589 16.7657 8.31312 16.3891 7.90911C16.0126 7.50509 15.3798 7.48283 14.9758 7.85938L12.0497 10.5866L9.32245 7.66048C8.94589 7.25647 8.31312 7.23421 7.90911 7.61076C7.50509 7.98731 7.48283 8.62008 7.85938 9.0241L10.5866 11.9502L7.66048 14.6775C7.25647 15.054 7.23421 15.6868 7.61076 16.0908C7.98731 16.4948 8.62008 16.5171 9.0241 16.1405L11.9502 13.4133L14.6775 16.3394C15.054 16.7434 15.6868 16.7657 16.0908 16.3891C16.4948 16.0126 16.5171 15.3798 16.1405 14.9758L13.4133 12.0497L16.3394 9.32245Z" fill="currentColor"></path>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="alert alert-primary align-items-start alert-dismissible" role="alert" id="alert3" style="background: linear-gradient(15deg, #4a11a7 12%, rgb(99,84,186) 50%, rgb(57,11,175) 90%), #ff5f55;border-radius: 16px;width: 100%;"><button class="btn-close btn-close-white" type="button" aria-label="Close" data-bs-dismiss="alert3"></button>
+                                            <div class="d-flex justify-content-between"><span class="text-light" aria-hidden="&quot;true&quot;>&amp;times;" style="font-size: 16px;">Tidak di rekomendasikan menambah produk melalui tambah produk cepat. jika tersimpan. lakukan perubahan data di halaman berikut dengan klik&nbsp;<a class="alert-link" href="item.html"><span style="font-weight: normal !important; color: rgb(249, 226, 20);">disini</span></a></span></div>
+                                        </div>
+                                        <form id="formTambahProdukCepat">
+                                            <div class="mb-3"><label class="form-label">Nama Produk</label><input class="form-control form-control" type="text" id="namaProdukBaru" required="" style="border-radius: 16px;width: 100%;border-color: rgb(78,115,223);"></div>
+                                            <div class="mb-3"><label class="form-label">Harga Jual</label><input class="form-control form-control" type="number" id="hargaProdukBaru" required="" style="border-radius: 16px;width: 100%;border-color: rgb(78,115,223);"></div>
+                                            <div class="mb-3"><label class="form-label">Stok</label><input class="form-control form-control" type="number" id="stokProdukBaru" required="" style="border-radius: 16px;width: 100%;border-color: rgb(78,115,223);"></div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer"><button class="btn btn-primary text-start d-flex d-xxl-flex justify-content-center align-items-center d-flex" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;" type="submit" form="formTambahProdukCepat"><i class="fas fa-save" style="margin-right: 10px;"></i> Simpan</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" role="dialog" tabindex="-1" id="modalPembayaran">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-between">
+                                        <h4 class="modal-title" style="color: rgb(40,40,40);font-family: Nunito, sans-serif;font-weight: bold;font-size: 20px;">Proses pembayaran</h4><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" type="button" aria-label="Close" data-bs-dismiss="modal" style="font-size: 34px;color: rgb(78,115,223);box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-width: 2px;border-style: solid;border-radius: 16px;">
+                                            <path d="M16.3394 9.32245C16.7434 8.94589 16.7657 8.31312 16.3891 7.90911C16.0126 7.50509 15.3798 7.48283 14.9758 7.85938L12.0497 10.5866L9.32245 7.66048C8.94589 7.25647 8.31312 7.23421 7.90911 7.61076C7.50509 7.98731 7.48283 8.62008 7.85938 9.0241L10.5866 11.9502L7.66048 14.6775C7.25647 15.054 7.23421 15.6868 7.61076 16.0908C7.98731 16.4948 8.62008 16.5171 9.0241 16.1405L11.9502 13.4133L14.6775 16.3394C15.054 16.7434 15.6868 16.7657 16.0908 16.3891C16.4948 16.0126 16.5171 15.3798 16.1405 14.9758L13.4133 12.0497L16.3394 9.32245Z" fill="currentColor"></path>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="formPembayaran">
+                                            <div class="mb-3"><label class="form-label" style="color: var(--text-color);">Nama Pelanggan</label><input class="form-control form-control" type="text" id="namaPelanggan" required="" style="border-radius: 16px;width: 100%;border-color: rgb(78,115,223);color: var(--text-color);"></div>
+                                            <div class="mb-3"><label class="form-label" style="color: var(--text-color);">Total Pembayaran</label><input class="form-control form-control" type="text" id="totalPembayaran" readonly="" style="border-radius: 16px;width: 100%;border-color: rgb(78,115,223);color: var(--text-color);"></div>
+                                            <div class="mb-3"><label class="form-label" style="color: var(--text-color);">Metode Pembayaran</label><select class="form-select form-select" id="metodePembayaran" style="border-radius: 16px;width: 100%;border-color: rgb(78,115,223);color: var(--text-color);">
+                                                    <option value="tunai">Tunai</option>
+                                                    <option value="transfer">Transfer</option>
+                                                    <option value="qris">QRIS</option>
+                                                    <option value="shopee">Shopee</option>
+                                                    <option value="tokopedia">Tokopedia</option>
+                                                    <option value="tiktok">TikTok Shop</option>
+                                                    <option value="lazada">Lazada</option>
+                                                    <option value="bukalapak">BukaLapak</option>
+                                                </select></div>
+                                            <div class="mb-3"><label class="form-label" style="color: var(--text-color);">Uang Diterima</label><input class="form-control form-control" type="number" id="uangDiterima" required="" style="border-radius: 16px;width: 100%;border-color: rgb(78,115,223);color: var(--text-color);"></div>
+                                            <div class="mb-3"><label class="form-label" style="color: var(--text-color);">Kembalian</label><input class="form-control form-control" type="text" id="kembalian" readonly="" style="border-radius: 16px;width: 100%;border-color: rgb(78,115,223);color: var(--text-color);"></div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer"><button class="btn btn-primary text-start d-flex d-xxl-flex justify-content-center align-items-center d-flex" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;" type="submit" form="formPembayaran"><i class="fas fa-save" style="margin-right: 10px;"></i> Selesaikan Transaksi</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" role="dialog" tabindex="-1" id="modalStruk">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-between">
+                                        <h4 class="modal-title" style="color: rgb(40,40,40);font-family: Nunito, sans-serif;font-weight: bold;font-size: 20px;">Struk pembelian</h4><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" type="button" aria-label="Close" data-bs-dismiss="modal" style="font-size: 34px;color: rgb(78,115,223);box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-width: 2px;border-style: solid;border-radius: 16px;">
+                                            <path d="M16.3394 9.32245C16.7434 8.94589 16.7657 8.31312 16.3891 7.90911C16.0126 7.50509 15.3798 7.48283 14.9758 7.85938L12.0497 10.5866L9.32245 7.66048C8.94589 7.25647 8.31312 7.23421 7.90911 7.61076C7.50509 7.98731 7.48283 8.62008 7.85938 9.0241L10.5866 11.9502L7.66048 14.6775C7.25647 15.054 7.23421 15.6868 7.61076 16.0908C7.98731 16.4948 8.62008 16.5171 9.0241 16.1405L11.9502 13.4133L14.6775 16.3394C15.054 16.7434 15.6868 16.7657 16.0908 16.3891C16.4948 16.0126 16.5171 15.3798 16.1405 14.9758L13.4133 12.0497L16.3394 9.32245Z" fill="currentColor"></path>
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" fill="currentColor"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="modal-body d-flex flex-column justify-content-start align-items-center justify-content-xxl-start align-items-xxl-center">
+                                        <div class="d-flex justify-content-center align-items-center premium2" style="z-index: 2;height: 100%;position: absolute;/*backdrop-filter: blur(1px);-webkit-backdrop-filter: blur(1px);*/max-height: 100%;max-width: none;width: 100%;padding: 40px;">
+                                            <div class="premium2" style="position: absolute;width: 100%;backdrop-filter: blur(3px);-webkit-backdrop-filter: blur(3px);height: 100%;"></div><span class="text-center text-bg-warning premium2" style="z-index: 2;padding: 16px;border-radius: 16px;">Nota tidak dapat di <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
+                                                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
+                                                    <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path>
+                                                </svg>&nbsp;capture,<br>cetak dengan metode cetak nota atau cetak foto.</span>
+                                        </div>
+                                        <div id="strukPembayaran" style="z-index: 1;"></div>
+                                    </div>
+                                    <div class="modal-footer d-flex flex-column align-items-end">
+                                        <div style="width: 100%;">
+                                            <div class="alert alert-primary align-items-start alert-dismissible premium2" role="alert" style="background: linear-gradient(15deg, #aa0000 12%, rgb(231,22,22) 49%, #ff5353 85%), #ff5f55;border-radius: 16px;width: 100%;" id="alertnopicture"><button class="btn-close btn-close-white" type="button" aria-label="Close" data-bs-dismiss="alert"></button>
+                                                <div class="d-flex justify-content-between"><span class="text-light" aria-hidden="&quot;true&quot;>&amp;times;" style="font-size: 16px;">Akun anda&nbsp;<span class="status" aria-hidden="&quot;true&quot;>&amp;times;" style="color: rgb(250,255,0);">Status</span>&nbsp;tidak dapat mencetak gambar, karena fitur ini tersedia di akun premium. cek&nbsp;<a class="alert-link link-light" href="berlangganan.html"><span style="font-weight: normal !important;">disini</span></a></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex" style="gap: 16px;"><script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    
+    <script>
+        // Data contoh - ganti dengan data sebenarnya
+        const pengaturanToko = {
+            namaToko: "Toko NotaBoost",
+            alamatToko: "Jl. Contoh No. 123, Jakarta",
+            nomorWAToko: "081234567890",
+            catatanKakiStruk: "Terima kasih telah berbelanja di Toko NotaBoost",
+            logoToko: "https://via.placeholder.com/100"
+        };
+
+        const nota = {
+            namaPelanggan: "John Doe",
+            tanggal: new Date().toLocaleDateString(),
+            metodePembayaran: "Tunai",
+            produk: [
+                { nama: "Produk A", jumlah: 2, harga: 50000 },
+                { nama: "Produk B", jumlah: 1, harga: 75000 },
+                { nama: "Produk C", jumlah: 3, harga: 25000 }
+            ],
+            totalHarga: 200000,
+            uangDiterima: 250000,
+            kembalian: 50000
+        };
+
+        // Fungsi untuk menyimpan nota sebagai HTML
+        function downloadNota() {
+            const content = document.getElementById('strukCetak').outerHTML;
+            const blob = new Blob([content], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'notabost.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Fungsi untuk mencetak nota
+        function printNota() {
+            window.print();
+        }
+
+        // Fungsi untuk capture dan download sebagai gambar
+        function captureAndDownload() {
+            html2canvas(document.getElementById('strukCetak')).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'notabost.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    </script><button class="btn btn-primary text-start d-flex d-xxl-flex justify-content-center align-items-center d-flex" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;" type="button" onclick="window.print()"><i class="fas fa-print" style="margin-right: 10px;"></i> Cetak Nota</button><button class="btn btn-primary text-start d-flex d-xxl-flex justify-content-center align-items-center d-flex premium" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;" type="button" onclick="captureAndDownload()"><i class="fas fa-photo-video" style="margin-right: 10px;"></i> Cetak Foto</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-white sticky-footer" style="margin-top: 33px;border-top: 8px solid rgb(78,115,223);width: 100%;">
+                <div class="container">
+                    <div class="row d-xxl-flex justify-content-xxl-center">
+                        <div class="col-md-3 col-lg-3 col-xxl-2 d-flex d-xxl-flex flex-column align-items-start" style="padding: 16px;">
+                            <div class="fw-bold d-flex align-items-center" style="margin-bottom: 16px;"><img src="../../assets/img/SEO/icon-wallet.webp" style="width: 35px;margin-bottom: 0px;border-radius: 10px;margin-right: 10px;"><span style="font-family: Nunito, sans-serif;font-weight: bold;">WalletKu.biz.id</span></div>
+                            <p class="copyright" style="font-family: Nunito, sans-serif;font-size: 16px;color: var(--text-color);line-height: 22px;">Ahli dalam mengatur keuangan dan tokomu.</p>
+                        </div>
+                        <div class="col-md-3" style="padding: 16px;">
+                            <ul class="list-group">
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 5px;padding-bottom: 5px;font-size: 16px;background: var(--primary-color);color: var(--card-color);border-radius: 6.6px 5.6px 0px -2px;border-bottom-right-radius: 16px;border-bottom-left-radius: 16px;border-top-right-radius: 16px;border-top-left-radius: 16px;margin-bottom: 16px;"><span style="font-family: Nunito, sans-serif;font-weight: bold;color: var(--card-color);font-size: 16px;">Layanan</span></li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Halaman utama<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                            <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                        </svg></a></li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/login" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Login<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                            <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                        </svg></a></li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/register" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Register<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                            <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                        </svg></a></li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/reset" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Reset password<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                            <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                        </svg></a></li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/#harga" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Harga<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                            <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                        </svg></a></li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/privacy-policy" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Privacy policy<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                            <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                        </svg></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 col-lg-3" style="padding: 16px;">
+                            <ul class="list-group">
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 5px;padding-bottom: 5px;font-size: 16px;background: var(--primary-color);color: var(--card-color);border-radius: 6.6px 5.6px 0px -2px;border-bottom-right-radius: 16px;border-bottom-left-radius: 16px;border-top-right-radius: 16px;border-top-left-radius: 16px;margin-bottom: 16px;"><span style="font-family: Nunito, sans-serif;font-weight: bold;color: var(--card-color);font-size: 16px;">Sponsor Utama</span></li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/#sponsor" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;" rel="prev">Sponsor<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                            <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                        </svg></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3" style="padding: 16px;">
+                            <ul class="list-group">
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 5px;padding-bottom: 5px;font-size: 16px;background: var(--primary-color);color: var(--card-color);border-radius: 6.6px 5.6px 0px -2px;border-bottom-right-radius: 16px;border-bottom-left-radius: 16px;border-top-right-radius: 16px;border-top-left-radius: 16px;margin-bottom: 16px;"><span style="font-family: Nunito, sans-serif;font-weight: bold;color: var(--card-color);font-size: 16px;">Founder</span></li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;">
+                                    <div style="margin-bottom: 10px;"><img style="height: 50px;width: 50px;margin-right: 16px;border-radius: 16px;" src="../../assets/img/bima.webp"><a href="https://www.threads.net/@bimboy.zxz?__pwa=1" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;" target="_blank">Bimboy.zxz<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                                <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                            </svg></a></div>
+                                    <p class="text-muted" style="font-family: Nunito, sans-serif;margin-bottom: 16px;font-size: 14px;">Web developer</p>
+                                </li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;">
+                                    <div style="margin-bottom: 10px;"><img style="height: 50px;width: 50px;margin-right: 16px;border-radius: 16px;" src="../../assets/img/gyku.webp"><a href="https://www.threads.net/@gyku__" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;" target="_blank">Gyku__<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                                <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                            </svg></a></div>
+                                    <p class="text-muted" style="font-family: Nunito, sans-serif;margin-bottom: 16px;font-size: 14px;">Support</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center pt-3">
+                        <p class="mb-0" style="font-family: Nunito, sans-serif;color: var(--text-color);font-weight: bold;">Copyright © 2025 WalletKu.biz.id | update .txt</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between justify-content-lg-center" style="z-index: 500;bottom: -1px;position: fixed;padding-bottom: 0px;">
+                    <div class="container justify-content-between" data-aos="slide-up" style="margin: 0px;padding: 0px;width: 100vw;max-width: 100%;padding-bottom: 0px;margin-bottom: -10px;">
+                        <div class="row justify-content-between" style="margin: 0px;width: 100%;">
+                            <div class="col" style="padding: 0px;width: 100%;background: #4361ee;border-top-left-radius: 0px;overflow: hidden;"><a class="btn btn-primary d-lg-flex justify-content-lg-center align-items-lg-center" role="button" style="width: 100%;padding-bottom: 20px;" href="https://walletku.biz.id/dashboard/" target="_parent"><i class="fas fa-wallet" style="margin-right: 8px;"></i>&nbsp;WalletKu</a></div>
+                            <div class="col" style="padding: 0px;width: 100%;background: #4361ee;border-top-right-radius: 0px;overflow: hidden;"><a class="btn btn-primary d-lg-flex justify-content-lg-center align-items-lg-center" role="button" style="width: 100%;padding-bottom: 20px;" target="_parent" href="https://walletku.biz.id/dashboard/tokoku/"><i class="fas fa-store" style="margin-right: 8px;"></i> TokoKu</a></div>
+                        </div>
+                    </div><a class="border rounded d-inline scroll-to-top" href="#page-top" style="margin-bottom: 36px;"><i class="fas fa-angle-up"></i></a>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div>
+        <div class="modal fade" role="dialog" tabindex="-1" id="premiumExpiredModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-between">
+                        <h4 class="modal-title" style="color: rgb(40,40,40);font-family: Nunito, sans-serif;font-weight: bold;font-size: 20px;"></h4><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" type="button" aria-label="Close" data-bs-dismiss="modal" style="font-size: 34px;color: rgb(78,115,223);box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-width: 2px;border-style: solid;border-radius: 16px;">
+                            <path d="M16.3394 9.32245C16.7434 8.94589 16.7657 8.31312 16.3891 7.90911C16.0126 7.50509 15.3798 7.48283 14.9758 7.85938L12.0497 10.5866L9.32245 7.66048C8.94589 7.25647 8.31312 7.23421 7.90911 7.61076C7.50509 7.98731 7.48283 8.62008 7.85938 9.0241L10.5866 11.9502L7.66048 14.6775C7.25647 15.054 7.23421 15.6868 7.61076 16.0908C7.98731 16.4948 8.62008 16.5171 9.0241 16.1405L11.9502 13.4133L14.6775 16.3394C15.054 16.7434 15.6868 16.7657 16.0908 16.3891C16.4948 16.0126 16.5171 15.3798 16.1405 14.9758L13.4133 12.0497L16.3394 9.32245Z" fill="currentColor"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <div class="modal-body"><span>Akun anda belum berlangganan</span></div>
+                    <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal" onclick="closeModal()">Tutup</button></div>
+                </div>
+            </div>
+        </div><style>
+    /* Styling tambahan untuk elemen yang disable */
+    .disabled-element {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    /* Styling untuk elemen premium2 */
+    .premium2 {
+      display: none;
+    }
+</style>
+
+<script>
+    // Fungsi untuk menutup modal
+    function closeModal() {
+      var modal = document.getElementById('premiumExpiredModal');
+      var bsModal = bootstrap.Modal.getInstance(modal);
+      bsModal.hide();
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      const userData = JSON.parse(localStorage.getItem("userData"));
+      if(!userData){
+        window.location.href = "../../login.html";
+        return;
+      }
+      
+      // Tampilkan data pengguna
+      document.querySelectorAll(".username").forEach(el => el.textContent = userData.nama);
+      document.querySelectorAll(".email").forEach(el => el.textContent = userData.email);
+      
+      // Fungsi validasi premium berdasarkan tanggal
+      function isPremiumActive() {
+        if(userData.role === "premium" && userData.date){
+          const expiryDate = new Date(userData.date);
+          const today = new Date();
+          today.setHours(0,0,0,0); // Normalisasi tanggal
+          return expiryDate >= today;
+        }
+        return false;
+      }
+      
+      // Validasi status premium
+      const premiumActive = isPremiumActive();
+      document.querySelectorAll(".status").forEach(el => {
+        el.textContent = (userData.role === "premium" && premiumActive) ? "premium" : "standart";
+      });
+      
+      // Fungsi untuk menangani tampilan elemen premium
+      function handlePremiumElements() {
+        const isPremium = (userData.role === "premium" && premiumActive);
+        
+        document.querySelectorAll(".premium").forEach(el => {
+          if(!isPremium){
+            el.disabled = true;
+            el.classList.add("disabled-element");
+          } else {
+            el.disabled = false;
+            el.classList.remove("disabled-element");
+          }
+        });
+        
+        document.querySelectorAll(".premium2").forEach(el => {
+          el.style.display = isPremium ? "none" : "block";
+        });
+      }
+      
+      // Panggil fungsi untuk menangani elemen premium
+      handlePremiumElements();
+      
+      // Tampilkan modal setelah 3 detik jika status standart
+      const shouldShowModal = !(userData.role === "premium" && premiumActive);
+      
+      if(shouldShowModal) {
+        setTimeout(function() {
+          var modal = new bootstrap.Modal(document.getElementById('premiumExpiredModal'));
+          modal.show();
+        }, 3000);
+      }
+    });
+</script>
+    </div>
+    <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/aos.min.js"></script>
+    <script src="../../assets/js/bs-init.js"></script>
+    <script src="../../assets/js/Tokoku-js/backup.js"></script>
+    <script src="../../assets/js/Tokoku-js/transaksi.js"></script>
+</body>
+
+</html>

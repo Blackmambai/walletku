@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Halaman Reset Password</title>
+    <link rel="canonical" href="https://walletku.biz.id/reset.html">
+    <meta property="og:url" content="https://walletku.biz.id/reset.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="description" content="Mulai mengelola pemasukan dan pengeluaran-mu dengan mudah. dengan fitur backup export dan import dan mengelola aplikasi toko">
+    <meta property="og:image" content="https://walletku.biz.id/assets/img/SEO/og1@2x.webp">
+    <link rel="icon" type="image/png" sizes="484x484" href="assets/img/SEO/icon-wallet.webp">
+    <link rel="icon" type="image/png" sizes="484x484" href="assets/img/SEO/icon-wallet.webp" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="484x484" href="assets/img/SEO/icon-wallet.webp">
+    <link rel="icon" type="image/png" sizes="484x484" href="assets/img/SEO/icon-wallet.webp" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="484x484" href="assets/img/SEO/icon-wallet.webp">
+    <link rel="icon" type="image/png" sizes="484x484" href="assets/img/SEO/icon-wallet.webp">
+    <link rel="icon" type="image/png" sizes="484x484" href="assets/img/SEO/icon-wallet.webp">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="manifest" href="manifest.json" crossorigin="use-credentials">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/aos.min.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/dashboard-app/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard-app/Pricing-Duo-badges.css">
+    <link rel="stylesheet" href="assets/css/dashboard-app/Pricing-Duo-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://apis.google.com/js/api.js" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+</head>
+
+<body class="d-flex d-xxl-flex flex-column justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center bg-gradient-primary" style="height: auto;background: var(--primary-color);">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;font-family: Nunito, sans-serif;">
+        <div class="row flex-column flex-sm-column flex-md-column flex-lg-row flex-xl-row flex-xxl-row" style="/*gap: 16px;*/max-width: 600px;padding-right: 16px;padding-left: 16px;">
+            <div class="col d-flex d-print-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex" style="background: rgba(232,232,232,0.02);width: 100%;padding: 0px;"><img class="d-print-none d-lg-none d-xl-none d-xxl-none" data-aos="slide-up" data-aos-duration="650" data-aos-delay="400" src="assets/img/walletku2.webp" style="/*object-fit: cover;*/width: 100%;border-radius: 16px;" loading="lazy"><img class="d-none d-print-flex d-sm-none d-md-none d-lg-flex d-xl-flex d-xxl-flex" src="assets/img/walletku1.webp" style="width: 100%;padding-right: 16px;"></div>
+            <div class="col text-bg-primary d-flex flex-column justify-content-center" style="z-index: 5;padding: 0px;padding-right: 16px;padding-left: 16px;padding-top: 16px;padding-bottom: 16px;background: rgba(232,232,232,0.02);border-radius: 16px;width: 100%;border: 0px solid rgb(255,255,255);height: auto;">
+                <div class="text-center text-sm-center text-md-center text-lg-center text-xl-center text-xxl-center" style="margin-bottom: 20px;"><span style="font-size: 24px;margin-bottom: 0px;transform: translate(-38px);display: inline;color: rgb(255,255,255);"><strong>Reset Password</strong></span></div>
+                <div class="text-start text-bg-success justify-content-start align-items-start pulse animated infinite alert-message" id="successReset" style="width: 100%;height: auto;margin-bottom: 16px;padding: 10px;border-radius: 16px;">
+                    <div class="d-flex"><i class="far fa-check-circle text-dark" style="margin-top: 5px;margin-right: 5px;"></i>
+                        <div><span class="text-dark">Sip! anda berhasil merubah kata sandi</span></div>
+                    </div>
+                </div>
+                <div class="text-start text-bg-danger justify-content-start align-items-start pulse animated infinite alert-message" id="errorReset" style="width: 100%;height: auto;margin-bottom: 16px;padding: 10px;border-radius: 16px;">
+                    <div class="d-flex"><i class="far fa-times-circle text-white" style="margin-top: 5px;margin-right: 5px;"></i>
+                        <div><span class="text-white">Gagal! email tidak di temukan</span></div>
+                    </div>
+                </div>
+                <div class="text-start text-bg-danger justify-content-start align-items-start pulse animated infinite alert-message" id="errorServer" style="width: 100%;height: auto;margin-bottom: 16px;padding: 10px;border-radius: 16px;">
+                    <div class="d-flex"><i class="far fa-times-circle text-white" style="margin-top: 5px;margin-right: 5px;"></i>
+                        <div><span class="text-white">Gagal! menghubungi server, coba lagi nanti</span></div>
+                    </div>
+                </div>
+                <form onsubmit="resetPassword(event)" style="width: 100%;max-width: 600px;">
+                    <div class="mb-3"><input class="form-control form-control-user" type="email" id="email" aria-describedby="emailHelp" placeholder="Masukan Email" name="email" style="font-size: 16px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 20px rgba(42,58,136,0.49);"></div>
+                    <div class="mb-3"><input class="form-control form-control-user" type="password" id="newPassword" placeholder="password" name="newPassword" style="font-size: 16px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 20px rgba(42,58,136,0.49);"></div>
+                    <div class="mb-3">
+                        <div class="custom-checkbox small">
+                            <div class="form-check" style="font-size: 16px;"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1" style="color: rgb(255,255,255);">Ingat saya</label></div>
+                        </div>
+                    </div><button class="btn btn-primary d-block btn-user w-100" type="submit" style="font-size: 16px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 20px rgba(42,58,136,0.49);">Masuk</button>
+                    <hr><style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .reset-container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      background-color: white;
+    }
+    .form-title {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #0d6efd;
+    }
+    .btn-reset {
+      width: 100%;
+      padding: 10px;
+    }
+    .alert-message {
+      display: none;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      text-align: center;
+    }
+    .alert-error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+  </style>
+
+<script>
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbxHFQRQDCGCsLPWH_Bm9soZd85OR1BROMOB4r4kEwk39Zb4QdE-IHLnAmv3qffVsBNM/exec";
+
+    function resetPassword(event){
+      event.preventDefault();
+      const email = document.getElementById("email").value;
+      const newPassword = document.getElementById("newPassword").value;
+      
+      // Sembunyikan semua pesan sebelumnya
+      document.querySelectorAll('.alert-message').forEach(el => {
+        el.style.display = 'none';
+      });
+      
+      // Show loading state
+      const submitBtn = event.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Memproses...';
+      
+      fetch(scriptUrl + "?action=resetPassword&email=" + encodeURIComponent(email) + "&newPassword=" + encodeURIComponent(newPassword))
+      .then(response => response.json())
+      .then(data => {
+          if(data.status === "success"){
+             // Tampilkan pesan sukses
+             document.getElementById('successReset').style.display = 'block';
+             
+             // Redirect setelah 2 detik
+             setTimeout(() => {
+               window.location.href = "login.html";
+             }, 2000);
+          } else {
+             // Tampilkan pesan error
+             document.getElementById('errorReset').style.display = 'block';
+             submitBtn.disabled = false;
+             submitBtn.textContent = 'Reset Password';
+          }
+      })
+      .catch(err => {
+        console.error(err);
+        // Tampilkan pesan error server
+        document.getElementById('errorServer').style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Reset Password';
+      });
+    }
+  </script>
+                </form>
+                <div class="text-center" style="color: rgb(255,255,255);margin-bottom: 8px;"><span>Sudah punya akun?&nbsp;<a class="small" href="login.html" style="font-size: 16px;color: rgb(255,255,255);margin-bottom: 0px;padding-bottom: 0px;">Masuk</a></span></div>
+                <div class="text-center" style="color: rgb(255,255,255);margin-bottom: 8px;"><span>Belum punya akun?&nbsp;<a class="small" href="register.html" style="font-size: 16px;color: rgb(255,255,255);margin-bottom: 0px;padding-bottom: 0px;">Daftar</a></span></div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-white sticky-footer" style="margin-top: 33px;border-top: 8px solid rgb(78,115,223);width: 100%;">
+        <div class="container">
+            <div class="row d-xxl-flex justify-content-xxl-center">
+                <div class="col-md-3 col-lg-3 col-xxl-2 d-flex d-xxl-flex flex-column align-items-start" style="padding: 16px;">
+                    <div class="fw-bold d-flex align-items-center" style="margin-bottom: 16px;"><img src="assets/img/SEO/icon-wallet.webp" style="width: 35px;margin-bottom: 0px;border-radius: 10px;margin-right: 10px;"><span style="font-family: Nunito, sans-serif;font-weight: bold;">WalletKu.biz.id</span></div>
+                    <p class="copyright" style="font-family: Nunito, sans-serif;font-size: 16px;color: var(--text-color);line-height: 22px;">Ahli dalam mengatur keuangan dan tokomu.</p>
+                </div>
+                <div class="col-md-3" style="padding: 16px;">
+                    <ul class="list-group">
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 5px;padding-bottom: 5px;font-size: 16px;background: var(--primary-color);color: var(--card-color);border-radius: 6.6px 5.6px 0px -2px;border-bottom-right-radius: 16px;border-bottom-left-radius: 16px;border-top-right-radius: 16px;border-top-left-radius: 16px;margin-bottom: 16px;"><span style="font-family: Nunito, sans-serif;font-weight: bold;color: var(--card-color);font-size: 16px;">Layanan</span></li>
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Halaman utama<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                </svg></a></li>
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/login" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Login<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                </svg></a></li>
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/register" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Register<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                </svg></a></li>
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/reset" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Reset password<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                </svg></a></li>
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/#harga" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Harga<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                </svg></a></li>
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/privacy-policy" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;">Privacy policy<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                </svg></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-lg-3" style="padding: 16px;">
+                    <ul class="list-group">
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 5px;padding-bottom: 5px;font-size: 16px;background: var(--primary-color);color: var(--card-color);border-radius: 6.6px 5.6px 0px -2px;border-bottom-right-radius: 16px;border-bottom-left-radius: 16px;border-top-right-radius: 16px;border-top-left-radius: 16px;margin-bottom: 16px;"><span style="font-family: Nunito, sans-serif;font-weight: bold;color: var(--card-color);font-size: 16px;">Sponsor Utama</span></li>
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/#sponsor" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;" rel="prev">Sponsor<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                    <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                </svg></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3" style="padding: 16px;">
+                    <ul class="list-group">
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 5px;padding-bottom: 5px;font-size: 16px;background: var(--primary-color);color: var(--card-color);border-radius: 6.6px 5.6px 0px -2px;border-bottom-right-radius: 16px;border-bottom-left-radius: 16px;border-top-right-radius: 16px;border-top-left-radius: 16px;margin-bottom: 16px;"><span style="font-family: Nunito, sans-serif;font-weight: bold;color: var(--card-color);font-size: 16px;">Founder</span></li>
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;">
+                            <div style="margin-bottom: 10px;"><img style="height: 50px;width: 50px;margin-right: 16px;border-radius: 16px;" src="assets/img/bima.webp"><a href="https://www.threads.net/@bimboy.zxz?__pwa=1" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;" target="_blank">Bimboy.zxz<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                        <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                    </svg></a></div>
+                            <p class="text-muted" style="font-family: Nunito, sans-serif;margin-bottom: 16px;font-size: 14px;">Web developer</p>
+                        </li>
+                        <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;">
+                            <div style="margin-bottom: 10px;"><img style="height: 50px;width: 50px;margin-right: 16px;border-radius: 16px;" src="assets/img/gyku.webp"><a href="https://www.threads.net/@gyku__" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;" target="_blank">Gyku__<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
+                                        <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
+                                    </svg></a></div>
+                            <p class="text-muted" style="font-family: Nunito, sans-serif;margin-bottom: 16px;font-size: 14px;">Support</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between align-items-center pt-3">
+                <p class="mb-0" style="font-family: Nunito, sans-serif;color: var(--text-color);font-weight: bold;">Copyright © 2025 WalletKu.biz.id | update .txt</p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between justify-content-lg-center" style="z-index: 500;bottom: -1px;position: fixed;padding-bottom: 0px;">
+            <div class="container justify-content-between" data-aos="slide-up" style="margin: 0px;padding: 0px;width: 100vw;max-width: 100%;padding-bottom: 0px;margin-bottom: -10px;">
+                <div class="row justify-content-between" style="margin: 0px;width: 100%;">
+                    <div class="col" style="padding: 0px;width: 100%;background: #4361ee;border-top-left-radius: 0px;overflow: hidden;"><a class="btn btn-primary d-lg-flex justify-content-lg-center align-items-lg-center" role="button" style="width: 100%;padding-bottom: 20px;" href="https://walletku.biz.id/dashboard/" target="_parent"><i class="fas fa-wallet" style="margin-right: 8px;"></i>&nbsp;WalletKu</a></div>
+                    <div class="col" style="padding: 0px;width: 100%;background: #4361ee;border-top-right-radius: 0px;overflow: hidden;"><a class="btn btn-primary d-lg-flex justify-content-lg-center align-items-lg-center" role="button" style="width: 100%;padding-bottom: 20px;" target="_parent" href="https://walletku.biz.id/dashboard/tokoku/"><i class="fas fa-store" style="margin-right: 8px;"></i> TokoKu</a></div>
+                </div>
+            </div><a class="border rounded d-inline scroll-to-top" href="#page-top" style="margin-bottom: 36px;"><i class="fas fa-angle-up"></i></a>
+        </div>
+    </footer>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/aos.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+</body>
+
+</html>

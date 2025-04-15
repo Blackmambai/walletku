@@ -1,0 +1,17 @@
+.produk01 {
+  /*box-shadow: 0px 6px 14px rgba(67,97,238,0.56);*/
+  border-left-width: 5px;
+  border-radius: 16px;
+  margin-bottom: 0px;
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.btnproduk1 {
+  border-radius: 16px;
+  font-family: Nunito, sans-serif;
+  box-shadow: 0px 6px 14px rgba(67,97,238,0.56);
+  width: auto;
+}
+
