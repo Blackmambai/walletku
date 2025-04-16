@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Purchase Subscription</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" 
+        src="https://app.sandbox.midtrans.com/snap/snap.js" 
+        data-client-key="MIDTRANS_CLIENT_KEY_ANDA"></script>
+</head>
+<body>
+    <!-- Form Cek Email -->
+    <div id="emailForm">
+        <h2>Cek Email</h2>
+        <input type="email" id="email" placeholder="Masukkan email">
+        <button onclick="checkEmail()">Cek</button>
+    </div>
+
+    <!-- Form Pembelian (Awalnya tersembunyi) -->
+    <div id="purchaseForm" style="display:none;">
+        <h2>Form Pembelian</h2>
+        <p>Nama: <span id="nama"></span></p>
+        <p>Email: <span id="showEmail"></span></p>
+        <select id="paket">
+            <option value="1month">1 Bulan - Rp100.000</option>
+            <option value="6months">6 Bulan - Rp500.000</option>
+            <option value="1year">1 Tahun - Rp1.000.000</option>
+            <option value="lifetime">Lifetime - Rp5.000.000</option>
+        </select>
+        <button onclick="processPayment()">Bayar Sekarang</button>
+    </div>
+
+<script>
+const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHFQRQDCGCsLPWH_Bm9soZd85OR1BROMOB4r4kEwk39Zb4QdE-IHLnAmv3qffVsBNM/exec';
+
+let currentUser = null;
+
+async function checkEmail() {
+    const email = document.getElementById('email').value;
+    if(!email) return Swal.fire('Error', 'Email harus diisi', 'error');
+    
+    try {
+        const response = await fetch(`${APP_SCRIPT_URL}?action=getUser&email=${email}`);
+        const data = await response.json();
+        
+        if(data.status === 'success') {
+            currentUser = data;
+            document.getElementById('nama').textContent = data.nama;
+            document.getElementById('showEmail').textContent = data.email;
+            document.getElementById('emailForm').style.display = 'none';
+            document.getElementById('purchaseForm').style.display = 'block';
+        } else {
+            Swal.fire('Error', 'Email tidak terdaftar', 'error');
+        }
+    } catch(error) {
+        Swal.fire('Error', 'Terjadi kesalahan', 'error');
+    }
+}
+
+async function processPayment() {
+    const package = document.getElementById('paket').value;
+    
+    try {
+        // Dapatkan token Midtrans
+        const res = await fetch(
+            `${APP_SCRIPT_URL}?action=createMidtransTransaction&email=${currentUser.email}&package=${package}`
+        );
+        const transaction = await res.json();
+        
+        if(transaction.status !== 'success') throw new Error(transaction.message);
+        
+        // Buka popup Midtrans
+        window.snap.pay(transaction.token, {
+            onSuccess: async function(result) {
+                // Perpanjang langganan
+                const res = await fetch(
+                    `${APP_SCRIPT_URL}?action=extendSubscription&email=${currentUser.email}&months=${transaction.months}`
+                );
+                const data = await res.json();
+                
+                if(data.status === 'success') {
+                    Swal.fire('Sukses', 'Pembayaran berhasil! Langganan diperpanjang', 'success');
+                } else {
+                    Swal.fire('Error', 'Gagal memperpanjang langganan', 'error');
+                }
+            },
+            onPending: function(result) {
+                Swal.fire('Info', 'Pembayaran tertunda: ' + result.status_message, 'info');
+            },
+            onError: function(result) {
+                Swal.fire('Error', 'Pembayaran gagal: ' + result.status_message, 'error');
+            }
+        });
+    } catch(error) {
+        Swal.fire('Error', error.message, 'error');
+    }
+}
+</script>
+</body>
+</html>

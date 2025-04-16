@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
     <link rel="manifest" href="../../manifest.json" crossorigin="use-credentials">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/css/FONTSPRING%20DEMO%20-%20Cera%20Round%20Pro.css">
     <link rel="stylesheet" href="../../assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../assets/css/aos.min.css">
     <link rel="stylesheet" href="../../assets/css/animate.min.css">
@@ -59,7 +60,7 @@
 <body id="page-top">
     <div class="offcanvas offcanvas-start bg-body" tabindex="-1" id="offcanvas-menu" style="border-top-right-radius: 16px;border-bottom-right-radius: 16px;box-shadow: 40px 0px 20px 0px rgba(0,0,0,0.11);width: 290px;height: auto;">
         <div class="offcanvas-header justify-content-between mb-4 topbar" style="padding-left: 22px;"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="index.html" style="height: auto;">
-                <div class="bounce animated infinite sidebar-brand-icon rotate-n-15"><i class="fas fa-wallet text-primary" style="font-size: 23px;"></i></div>
+                <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-wallet text-primary" style="font-size: 23px;"></i></div>
                 <div class="sidebar-brand-text" style="margin-left: 10px;"><span class="text-primary" style="font-family: Nunito, sans-serif;font-weight: bold;font-size: 20px;">Dompetku</span></div>
             </a><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" type="button" aria-label="Close" data-bs-dismiss="offcanvas" style="font-size: 34px;color: rgb(78,115,223);box-shadow: 0px 6px 14px rgba(67,97,238,0.56);border-width: 2px;border-style: solid;border-radius: 16px;">
                 <path d="M16.3394 9.32245C16.7434 8.94589 16.7657 8.31312 16.3891 7.90911C16.0126 7.50509 15.3798 7.48283 14.9758 7.85938L12.0497 10.5866L9.32245 7.66048C8.94589 7.25647 8.31312 7.23421 7.90911 7.61076C7.50509 7.98731 7.48283 8.62008 7.85938 9.0241L10.5866 11.9502L7.66048 14.6775C7.25647 15.054 7.23421 15.6868 7.61076 16.0908C7.98731 16.4948 8.62008 16.5171 9.0241 16.1405L11.9502 13.4133L14.6775 16.3394C15.054 16.7434 15.6868 16.7657 16.0908 16.3891C16.4948 16.0126 16.5171 15.3798 16.1405 14.9758L13.4133 12.0497L16.3394 9.32245Z" fill="currentColor"></path>
@@ -210,21 +211,45 @@
                                     </div>
                                 </div>
                                 <div class="report-summary">
-                                    <div class="report-card" style="padding: 16px;background: rgb(255,255,255);box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.12);border-radius: 16px;border: 3px solid rgba(133,135,150,0.17);">
-                                        <h3 style="font-family: Nunito, sans-serif;">Total Pemasukan</h3>
-                                        <p id="report-income" style="font-family: 'Nunito';font-weight: bold;">Rp0</p>
+                                    <div class="text-start d-flex report-card" style="padding: 16px;background: rgb(255,255,255);box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.12);border-radius: 16px;border: 3px solid rgba(133,135,150,0.17);">
+                                        <div style="margin-right: 10px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 30px;">
+                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
+                                                <path d="M256 0a256 256 0 1 0 0 512A256 256 0 1 0 256 0zM127 281c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l71 71L232 136c0-13.3 10.7-24 24-24s24 10.7 24 24l0 182.1 71-71c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9L273 393c-9.4 9.4-24.6 9.4-33.9 0L127 281z"></path>
+                                            </svg></div>
+                                        <div>
+                                            <h3 style="font-family: Nunito, sans-serif;">Total Pemasukan</h3>
+                                            <p id="report-income" style="font-family: 'Nunito';font-weight: bold;">Rp0</p>
+                                        </div>
                                     </div>
-                                    <div class="report-card" style="padding: 16px;background: rgb(255,255,255);box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.12);border-radius: 16px;border: 3px solid rgba(133,135,150,0.17);">
-                                        <h3 style="font-family: Nunito, sans-serif;">Total Pengeluaran</h3>
-                                        <p id="report-expense" style="font-family: 'Nunito';font-weight: bold;">Rp0</p>
+                                    <div class="text-start d-flex report-card" style="padding: 16px;background: rgb(255,255,255);box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.12);border-radius: 16px;border: 3px solid rgba(133,135,150,0.17);">
+                                        <div style="margin-right: 10px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 30px;">
+                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
+                                                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM385 231c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-71-71V376c0 13.3-10.7 24-24 24s-24-10.7-24-24V193.9l-71 71c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L239 119c9.4-9.4 24.6-9.4 33.9 0L385 231z"></path>
+                                            </svg></div>
+                                        <div>
+                                            <h3 style="font-family: Nunito, sans-serif;">Total Pengeluaran</h3>
+                                            <p id="report-expense" style="font-family: 'Nunito';font-weight: bold;">Rp0</p>
+                                        </div>
                                     </div>
-                                    <div class="report-card" style="padding: 16px;background: rgb(255,255,255);box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.12);border-radius: 16px;border: 3px solid rgba(133,135,150,0.17);">
-                                        <h3 style="font-family: Nunito, sans-serif;">Saldo Bersih</h3>
-                                        <p id="report-balance" style="font-family: 'Nunito';font-weight: bold;">Rp0</p>
+                                    <div class="text-start d-flex report-card" style="padding: 16px;background: rgb(255,255,255);box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.12);border-radius: 16px;border: 3px solid rgba(133,135,150,0.17);">
+                                        <div style="margin-right: 10px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor" style="font-size: 30px;">
+                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
+                                                <path d="M96 96V320c0 35.3 28.7 64 64 64H576c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H160c-35.3 0-64 28.7-64 64zm64 160c35.3 0 64 28.7 64 64H160V256zM224 96c0 35.3-28.7 64-64 64V96h64zM576 256v64H512c0-35.3 28.7-64 64-64zM512 96h64v64c-35.3 0-64-28.7-64-64zM288 208a80 80 0 1 1 160 0 80 80 0 1 1 -160 0zM48 120c0-13.3-10.7-24-24-24S0 106.7 0 120V360c0 66.3 53.7 120 120 120H520c13.3 0 24-10.7 24-24s-10.7-24-24-24H120c-39.8 0-72-32.2-72-72V120z"></path>
+                                            </svg></div>
+                                        <div>
+                                            <h3 style="font-family: Nunito, sans-serif;">Saldo Bersih</h3>
+                                            <p id="report-balance" style="font-family: 'Nunito';font-weight: bold;">Rp0</p>
+                                        </div>
                                     </div>
-                                    <div class="report-card" style="padding: 16px;background: rgb(255,255,255);box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.12);border-radius: 16px;border: 3px solid rgba(133,135,150,0.17);">
-                                        <h3 style="font-family: Nunito, sans-serif;">Perubahan Bulan Lalu</h3>
-                                        <p id="report-change" style="font-family: 'Nunito';font-weight: bold;">Rp0</p>
+                                    <div class="text-start d-flex report-card" style="padding: 16px;background: rgb(255,255,255);box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.12);border-radius: 16px;border: 3px solid rgba(133,135,150,0.17);">
+                                        <div style="margin-right: 10px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 30px;">
+                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
+                                                <path d="M470.7 9.4c3 3.1 5.3 6.6 6.9 10.3s2.4 7.8 2.4 12.2l0 .1v0 96c0 17.7-14.3 32-32 32s-32-14.3-32-32V109.3L310.6 214.6c-11.8 11.8-30.8 12.6-43.5 1.7L176 138.1 84.8 216.3c-13.4 11.5-33.6 9.9-45.1-3.5s-9.9-33.6 3.5-45.1l112-96c12-10.3 29.7-10.3 41.7 0l89.5 76.7L370.7 64H352c-17.7 0-32-14.3-32-32s14.3-32 32-32h96 0c8.8 0 16.8 3.6 22.6 9.3l.1 .1zM0 304c0-26.5 21.5-48 48-48H464c26.5 0 48 21.5 48 48V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V304zM48 416v48H96c0-26.5-21.5-48-48-48zM96 304H48v48c26.5 0 48-21.5 48-48zM464 416c-26.5 0-48 21.5-48 48h48V416zM416 304c0 26.5 21.5 48 48 48V304H416zm-96 80a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z"></path>
+                                            </svg></div>
+                                        <div>
+                                            <h3 style="font-family: Nunito, sans-serif;">Perubahan Bulan Lalu</h3>
+                                            <p id="report-change" style="font-family: 'Nunito';font-weight: bold;">Rp0</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-column flex-sm-column flex-md-row flex-lg-row flex-xl-row flex-xxl-row report-charts">
@@ -293,28 +318,31 @@
                                                     <table class="table">
                                                         <thead>
                                                             <tr>
-                                                                <th>Data profile</th>
+                                                                <th style="font-family: Nunito, sans-serif;">Data User</th>
                                                                 <th style="color: rgb(255,255,255);">----------------------------</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td>Username</td>
-                                                                <td class="username">user</td>
+                                                                <td style="font-family: Nunito, sans-serif;">Username</td>
+                                                                <td class="username" style="font-family: Nunito, sans-serif;">user</td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Email</td>
-                                                                <td class="email">Email</td>
+                                                                <td style="font-family: Nunito, sans-serif;">Email</td>
+                                                                <td class="email" style="font-family: Nunito, sans-serif;">Email</td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Status</td>
-                                                                <td class="status">status</td>
+                                                                <td style="font-family: Nunito, sans-serif;">Status</td>
+                                                                <td class="status" style="font-family: Nunito, sans-serif;">status</td>
+                                                            </tr>
+                                                            <tr class="premium2">
+                                                                <td style="font-family: Nunito, sans-serif;">Upgrade</td>
+                                                                <td class="status"><button class="btn btn-primary shadow-luma" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;">Upgrade Account</button></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button></div>
                                         </div>
                                     </div>
                                 </div>
@@ -436,9 +464,22 @@
         return;
       }
       
-      // Tampilkan data pengguna
-      document.querySelectorAll(".username").forEach(el => el.textContent = userData.nama);
-      document.querySelectorAll(".email").forEach(el => el.textContent = userData.email);
+      // Tampilkan data pengguna pada elemen teks dan input
+      document.querySelectorAll(".username").forEach(el => {
+        if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.value = userData.nama;
+        } else {
+          el.textContent = userData.nama;
+        }
+      });
+      
+      document.querySelectorAll(".email").forEach(el => {
+        if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.value = userData.email;
+        } else {
+          el.textContent = userData.email;
+        }
+      });
       
       // Fungsi validasi premium berdasarkan tanggal
       function isPremiumActive() {
