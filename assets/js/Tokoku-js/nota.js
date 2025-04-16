@@ -130,7 +130,7 @@ if (filter.tanggalSelesai) endDate = new Date(filter.tanggalSelesai + 'T23:59:59
                             </h5>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                                 <span style="color: #6c757d;">Tanggal:</span>
-                                <span style="font-weight: 500;">${notaDetail.tanggal}</span>
+                                <span style="font-weight: 500;">${tanggalTerformat}</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                                 <span style="color: #6c757d;">Nama Pelanggan:</span>
