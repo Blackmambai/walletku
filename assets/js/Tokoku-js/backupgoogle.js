@@ -22,32 +22,50 @@ document.addEventListener('DOMContentLoaded', () => {
                         gapi.auth2.init({
                             client_id: clientId,
                             scope: scope
-                        }).then(resolve, reject); // Handle init error
+                        }).then(() => {
+                            console.log('GAPI Auth2 initialized.');
+                            resolve();
+                        }, (error) => {
+                            console.error('Error initializing GAPI Auth2:', error);
+                            reject(error);
+                        });
                     });
                 };
-                script.onerror = reject; // Handle script load error
+                script.onerror = (error) => {
+                    console.error('Error loading Google Platform script:', error);
+                    reject(error);
+                };
                 document.head.appendChild(script);
             });
         }
 
         async authenticate() {
             if (!gapi.auth2) {
-                throw new Error('Google Auth2 belum diinisialisasi.');
+                const error = new Error('Google Auth2 belum diinisialisasi.');
+                console.error('Authentication error:', error);
+                throw error;
             }
-            googleUser = await gapi.auth2.getAuthInstance().signIn();
-            return googleUser;
+            try {
+                googleUser = await gapi.auth2.getAuthInstance().signIn();
+                console.log('Authentication successful:', googleUser);
+                return googleUser;
+            } catch (error) {
+                console.error('Error during sign in:', error);
+                Swal.fire('Error', 'Gagal login ke Google', 'error');
+                throw error;
+            }
         }
 
         async executeWithAuth(callback) {
-            if (!googleUser) {
-                try {
+            try {
+                if (!googleUser) {
                     await this.authenticate();
-                } catch (error) {
-                    Swal.fire('Error', 'Gagal login ke Google', 'error');
-                    throw error; // Re-throw error to be caught by the caller
                 }
+                return await callback(googleUser.getAuthResponse().access_token);
+            } catch (error) {
+                console.error('Error in executeWithAuth:', error);
+                throw error;
             }
-            return callback(googleUser.getAuthResponse().access_token);
         }
 
         async getBackupFiles() {
@@ -59,9 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 if (!response.ok) {
                     const error = await response.json();
+                    console.error('Error getting backup files:', error);
                     throw new Error(`Gagal mendapatkan file backup: ${error.error.message}`);
                 }
-                return await response.json();
+                const data = await response.json();
+                console.log('Backup files retrieved:', data);
+                return data;
             });
         }
 
@@ -74,9 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 if (!response.ok) {
                     const error = await response.json();
+                    console.error(`Error downloading file ${fileId}:`, error);
                     throw new Error(`Gagal mengunduh file: ${error.error.message}`);
                 }
-                return await response.json();
+                const data = await response.json();
+                console.log(`File ${fileId} downloaded:`, data);
+                return data;
             });
         }
 
@@ -102,19 +126,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (!response.ok) {
                     const error = await response.json();
+                    console.error(`Error uploading file ${filename}:`, error);
                     throw new Error(`Gagal mengunggah file: ${error.error.message}`);
                 }
-                return await response.json();
+                const responseData = await response.json();
+                console.log(`File ${filename} uploaded:`, responseData);
+                return responseData;
             });
         }
 
         async getLocalData() {
-            return {
+            const localData = {
                 produk: JSON.parse(localStorage.getItem('produk') || '[]'),
                 nota: JSON.parse(localStorage.getItem('nota') || '[]'),
                 pengaturanToko: JSON.parse(localStorage.getItem('pengaturanToko') || '{}'),
                 lastSync: localStorage.getItem('lastSync') || null
             };
+            console.log('Local data retrieved:', localData);
+            return localData;
         }
 
         async syncData() {
@@ -123,12 +152,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const remoteFiles = await this.getBackupFiles();
 
                 if (!remoteFiles || !remoteFiles.files || remoteFiles.files.length === 0) {
+                    console.log('No remote backup files found, initiating backup.');
                     await this.backupData();
                     return;
                 }
 
                 const latestRemote = remoteFiles.files.sort((a, b) =>
                     new Date(b.createdTime) - new Date(a.createdTime))[0];
+                console.log('Latest remote backup:', latestRemote);
 
                 const remoteData = await this.downloadFile(latestRemote.id);
 
@@ -138,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('nota', JSON.stringify(remoteData.nota));
                     localStorage.setItem('pengaturanToko', JSON.stringify(remoteData.pengaturanToko));
                     localStorage.setItem('lastSync', new Date().toISOString());
+                    console.log('Local data updated from remote.');
 
                     Swal.fire({
                         title: 'Data Diperbarui',
@@ -146,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 } else {
                     // Update remote with local data
+                    console.log('Local data is up to date or newer, initiating backup.');
                     await this.backupData();
                 }
             } catch (error) {
@@ -162,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 await this.uploadFile(localData, filename);
                 localStorage.setItem('lastSync', today.toISOString());
+                console.log('Backup successful. Last sync updated.');
 
                 Swal.fire({
                     title: 'Backup Berhasil',
@@ -210,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('nota', JSON.stringify(remoteData.nota));
                 localStorage.setItem('pengaturanToko', JSON.stringify(remoteData.pengaturanToko));
                 localStorage.setItem('lastSync', new Date().toISOString());
+                console.log('Data imported successfully.');
 
                 Swal.fire({
                     title: 'Import Berhasil',
