@@ -77,85 +77,229 @@
                     <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" href="berlangganan.html" target="_parent" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);"><img src="../../assets/img/diamond.gif" style="width: auto;height: 16px;margin-right: 8px;"> Upgrade Account</a></li>
                 </ul>
             </div><style>
-        .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-left: 5px;
-            vertical-align: middle;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .d-none {
-            display: none !important;
+        .button-group {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         
         button {
-            padding: 8px 16px;
-            margin: 5px;
+            padding: 10px 15px;
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: background-color 0.3s;
         }
         
-        #lastSync {
-            margin-top: 10px;
-            font-style: italic;
+        button:hover {
+            background-color: #3367D6;
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        button.google-login {
+            background-color: #4285F4;
+        }
+        
+        button.google-logout {
+            background-color: #EA4335;
+        }
+        
+        button.backup {
+            background-color: #34A853;
+        }
+        
+        button.import {
+            background-color: #FBBC05;
+            color: #202124;
+        }
+        
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            display: none;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .debug-console {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f1f3f4;
+            border-radius: 4px;
+            font-family: monospace;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .debug-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .debug-entry {
+            margin-bottom: 5px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #34A853;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
     </style>
 </head>
 <body>
-    <h2>Google Drive Backup</h2>
+    <h1>Google Drive Backup System</h1>
     
-    <div>
-        <button id="btnGoogleLogin">
-            Login with Google
-            <span class="spinner"></span>
+    <div class="button-group">
+        <button id="btnGoogleLogin" class="google-login">
+            <img src="https://www.gstatic.com/images/branding/googleg/1x/googleg_standard_color_16dp.png" alt="Google logo">
+            <span>Login with Google</span>
+            <div class="spinner"></div>
         </button>
         
-        <button id="btnGoogleLogout" class="d-none">
-            Logout
-            <span class="spinner"></span>
+        <button id="btnGoogleLogout" class="google-logout d-none">
+            <span>Logout</span>
+            <div class="spinner"></div>
+        </button>
+    </div>
+    
+    <div class="button-group">
+        <button id="btnGoogleBackup" class="backup" disabled>
+            <span>Backup to Drive</span>
+            <div class="spinner"></div>
         </button>
         
-        <button id="btnGoogleBackup" disabled>
-            Backup to Drive
-            <span class="spinner"></span>
+        <button id="btnGoogleImport" class="import" disabled>
+            <span>Restore from Drive</span>
+            <div class="spinner"></div>
         </button>
-        
-        <button id="btnGoogleImport" disabled>
-            Restore from Drive
-            <span class="spinner"></span>
-        </button>
-        
-        <div style="margin-top: 10px;">
-            <label>
-                <input type="checkbox" id="autoSyncToggle" disabled>
-                Auto Sync every 30 minutes
-            </label>
-        </div>
-        
+    </div>
+    
+    <div class="toggle-container">
+        <label class="toggle-switch">
+            <input type="checkbox" id="autoSyncToggle" disabled>
+            <span class="slider"></span>
+        </label>
+        <span>Auto Sync every 30 minutes</span>
+    </div>
+    
+    <div class="status">
+        <div id="userInfo"></div>
         <div id="lastSync">Never synced</div>
     </div>
-
-    <!-- Debug Console -->
-    <div style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; font-family: monospace;" id="debugConsole">
-        <strong>Debug Console:</strong>
+    
+    <div class="debug-console">
+        <div class="debug-title">Debug Console</div>
         <div id="debugOutput"></div>
     </div>
 
     <script>
-        // Debug helper
+        // Debug helper with timestamp
         function debugLog(message) {
             const output = document.getElementById('debugOutput');
-            output.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${message}</div>`;
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'debug-entry';
+            entry.innerHTML = `<strong>[${timestamp}]</strong> ${message}`;
+            output.appendChild(entry);
             output.scrollTop = output.scrollHeight;
+            console.log(`[DEBUG] ${message}`);
+        }
+        
+        // Error handler
+        function handleError(error, context) {
+            const errorMessage = `Error in ${context}: ${error.message || error}`;
+            if (error.stack) {
+                debugLog(`${errorMessage}\nStack: ${error.stack}`);
+            } else {
+                debugLog(errorMessage);
+            }
+            
+            // Show user-friendly message
+            alert(`${context} failed: ${error.message || 'Unknown error'}`);
+            
+            // Log full error to console
+            console.error(context, error);
         }
     </script>
             <div class="d-flex flex-column" style="width: 100%;"><input class="d-none d-flex" type="file" id="fileImport" style="font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;border-radius: 16px;"></div>
