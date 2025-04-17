@@ -29,7 +29,6 @@
     <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css">
     <link rel="manifest" href="../../manifest.json" crossorigin="use-credentials">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <link rel="stylesheet" href="../../assets/css/FONTSPRING%20DEMO%20-%20Cera%20Round%20Pro.css">
     <link rel="stylesheet" href="../../assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../assets/css/aos.min.css">
     <link rel="stylesheet" href="../../assets/css/animate.min.css">
@@ -54,7 +53,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script src="https://apis.google.com/js/api.js"></script>
 </head>
 
 <body id="page-top">
@@ -76,222 +74,9 @@
                     <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="laporan.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent"><i class="fas fa-chart-bar me-2"></i> Laporan</a></li>
                     <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="toko.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent"><i class="fas fa-store me-2"></i> Profile TokoKu</a></li>
                     <li class="nav-item pulse animated infinite" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="../walletku/index.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent" rel="prev"><i class="fas fa-wallet me-2"></i> WalletKu</a></li>
+                    <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" href="berlangganan.html" target="_parent" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);"><img src="../../assets/img/diamond.gif" style="width: auto;height: 16px;margin-right: 8px;"> Upgrade Account</a></li>
                 </ul>
-            </div><style>
-        :root {
-            --primary-color: #4285f4;
-            --success-color: #34a853;
-            --danger-color: #ea4335;
-            --warning-color: #fbbc05;
-        }
-        
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: none;
-        }
-        
-        .card-header {
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 10px 10px 0 0 !important;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        
-        .btn-success {
-            background-color: var(--success-color);
-            border-color: var(--success-color);
-        }
-        
-        .btn-danger {
-            background-color: var(--danger-color);
-            border-color: var(--danger-color);
-        }
-        
-        .btn-warning {
-            background-color: var(--warning-color);
-            border-color: var(--warning-color);
-            color: #333;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background-color: #e9f0fd;
-            padding: 8px 15px;
-            border-radius: 50px;
-        }
-        
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-        
-        .sync-status {
-            font-size: 0.85rem;
-            color: #6c757d;
-        }
-        
-        .last-sync {
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin-top: 8px;
-        }
-        
-        .action-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .action-buttons .btn {
-            min-width: 200px;
-            flex: 1;
-        }
-        
-        .spinner-container {
-            display: inline-block;
-            margin-right: 8px;
-        }
-        
-        .settings-panel {
-            background-color: #f1f3f4;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
-        
-        @media (max-width: 768px) {
-            .action-buttons .btn {
-                min-width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container py-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h1 class="mb-0"><i class="fas fa-cloud-upload-alt me-2"></i>Integrasi Google Drive</h1>
-                <p class="text-muted mb-0">Kelola backup dan sinkronisasi data Anda</p>
             </div>
-            <div id="userAuthSection">
-                <div id="userInfo" class="user-info d-none">
-                    <img id="userAvatar" class="user-avatar" src="" alt="Avatar">
-                    <span id="userName"></span>
-                    <button id="btnGoogleLogout" class="btn btn-sm btn-danger ms-2">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
-                <button id="btnGoogleLogin" class="btn btn-primary d-none">
-                    <i class="fab fa-google me-2"></i>Login dengan Google
-                </button>
-            </div>
-        </div>
-
-        <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0"><i class="fas fa-cogs me-2"></i>Actions</h5>
-                <span id="syncStatus" class="sync-status"></span>
-            </div>
-            <div class="card-body">
-                <div class="action-buttons">
-                    <button id="btnGoogleBackup" class="btn btn-success" disabled>
-                        <div class="spinner-container">
-                            <span class="spinner-border spinner-border-sm d-none" id="backupSpinner"></span>
-                        </div>
-                        <i class="fas fa-cloud-upload-alt me-2"></i>Backup Data
-                    </button>
-                    <button id="btnGoogleImport" class="btn btn-primary" disabled>
-                        <div class="spinner-container">
-                            <span class="spinner-border spinner-border-sm d-none" id="importSpinner"></span>
-                        </div>
-                        <i class="fas fa-cloud-download-alt me-2"></i>Import Data
-                    </button>
-                    <button id="btnSync" class="btn btn-info" disabled>
-                        <div class="spinner-container">
-                            <span class="spinner-border spinner-border-sm d-none" id="syncSpinner"></span>
-                        </div>
-                        <i class="fas fa-sync-alt me-2"></i>Sinkronisasi
-                    </button>
-                    <button id="btnSelectiveBackup" class="btn btn-warning" disabled>
-                        <div class="spinner-container">
-                            <span class="spinner-border spinner-border-sm d-none" id="selectiveSpinner"></span>
-                        </div>
-                        <i class="fas fa-tasks me-2"></i>Backup Selektif
-                    </button>
-                </div>
-                
-                <div class="settings-panel">
-                    <div class="form-check form-switch mb-2">
-                        <input class="form-check-input" type="checkbox" id="autoSyncToggle">
-                        <label class="form-check-label" for="autoSyncToggle">
-                            <strong>Auto Sinkronisasi</strong>
-                        </label>
-                    </div>
-                    <div id="lastSync" class="last-sync">
-                        <i class="fas fa-clock me-2"></i>Status: Belum pernah sinkronisasi
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0"><i class="fas fa-history me-2"></i>Riwayat Backup</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover" id="backupHistory">
-                        <thead>
-                            <tr>
-                                <th>Nama File</th>
-                                <th>Tanggal</th>
-                                <th>Ukuran</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="4" class="text-center">Memuat data...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal untuk konfirmasi -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">Konfirmasi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modalBody">
-                    Apakah Anda yakin ingin melanjutkan?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" id="modalConfirmBtn">Ya, Lanjutkan</button>
-                </div>
-            </div>
-        </div>
-    </div>
             <div class="d-flex flex-column" style="width: 100%;"><input class="d-none d-flex" type="file" id="fileImport" style="font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;border-radius: 16px;"></div>
             <div>
                 <ul class="nav d-flex justify-content-between">
@@ -646,6 +431,10 @@
                                 <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;"><a href="https://walletku.biz.id/#sponsor" style="color: var(--text-color);font-weight: bold;font-family: Nunito, sans-serif;" rel="prev">Sponsor<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-arrow-up-right-circle-fill" style="margin-left: 6px;">
                                             <path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8m5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707z"></path>
                                         </svg></a></li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 5px;padding-bottom: 5px;font-size: 16px;background: var(--primary-color);color: var(--card-color);border-radius: 6.6px 5.6px 0px -2px;border-bottom-right-radius: 16px;border-bottom-left-radius: 16px;border-top-right-radius: 16px;border-top-left-radius: 16px;margin-bottom: 16px;"><span style="font-family: Nunito, sans-serif;font-weight: bold;color: var(--card-color);font-size: 16px;">Support</span></li>
+                                <li class="list-group-item" style="border-width: 0px;border-style: none;padding-top: 0px;padding-bottom: 5px;font-size: 16px;">
+                                    <div style="margin-bottom: 10px;"><img style="width: 115px;margin-right: 16px;border-radius: 16px;" src="https://logos-world.net/wp-content/uploads/2022/04/Cloudflare-Logo.png"><img style="width: 92px;margin-right: 16px;border-radius: 16px;" src="https://i0.wp.com/basescripts.com/wp-content/uploads/2023/05/google-apps-script_logo-removebg-preview_1.png?fit=294%2C221&amp;ssl=1"></div>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-md-3" style="padding: 16px;">
@@ -796,7 +585,6 @@
     <script src="../../assets/js/aos.min.js"></script>
     <script src="../../assets/js/bs-init.js"></script>
     <script src="../../assets/js/Tokoku-js/backup.js"></script>
-    <script src="../../assets/js/Tokoku-js/backupgoogle.js"></script>
     <script src="../../assets/js/Tokoku-js/laporan.js"></script>
 </body>
 
