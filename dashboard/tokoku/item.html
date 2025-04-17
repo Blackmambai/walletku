@@ -74,7 +74,22 @@
                     <li class="nav-item pulse animated infinite" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" aria-current="page" href="../walletku/index.html" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);" target="_parent" rel="prev"><i class="fas fa-wallet me-2"></i> WalletKu</a></li>
                     <li class="nav-item" data-bss-hover-animate="pulse" style="padding: 3px;background: #4e73df;color: var(--primary-color);font-size: 16px;margin-bottom: 23px;border-radius: 16px;border-width: 2px;border-style: solid;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);"><a class="nav-link" href="berlangganan.html" target="_parent" style="font-family: Nunito, sans-serif;color: rgb(255,255,255);"><img src="../../assets/img/diamond.gif" style="width: auto;height: 16px;margin-right: 8px;"> Upgrade Account</a></li>
                 </ul>
-            </div>
+            </div><button id="btnGoogleLogin" class="btn btn-primary">
+    <span class="spinner" style="display:none"></span>
+    Login dengan Google
+</button>
+
+<button id="btnGoogleBackup" class="btn btn-success" disabled>
+    <span class="spinner" style="display:none"></span>
+    Backup ke Drive
+</button>
+
+<div class="form-check">
+    <input type="checkbox" id="autoSyncToggle" class="form-check-input">
+    <label class="form-check-label">Auto Sync setiap 30 menit</label>
+</div>
+
+<p id="lastSync"></p>
             <div class="d-flex flex-column" style="width: 100%;"><input class="d-none d-flex" type="file" id="fileImport" style="font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;border-radius: 16px;"></div>
             <div>
                 <ul class="nav d-flex justify-content-between">
@@ -560,6 +575,7 @@
     <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../assets/js/aos.min.js"></script>
     <script src="../../assets/js/bs-init.js"></script>
+    <script src="../../assets/js/Tokoku-js/backup-google.js"></script>
     <script src="../../assets/js/Tokoku-js/backup.js"></script>
     <script src="../../assets/js/Tokoku-js/item.js"></script>
 </body>
