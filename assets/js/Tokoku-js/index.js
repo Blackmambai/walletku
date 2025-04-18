@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Total Stok Produk
         const totalStokProduk = produk.reduce((total, p) => total + p.stokProduk, 0);
         document.getElementById('totalStokProduk').textContent = totalStokProduk;
-
+    
         // Aktivitas Terakhir
         const aktivitasTerakhirList = nota
             .sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal))

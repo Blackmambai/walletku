@@ -49,7 +49,7 @@ if (filter.tanggalSelesai) endDate = new Date(filter.tanggalSelesai + 'T23:59:59
                 <td>Rp ${nota.totalHarga.toLocaleString()}</td>
                 <td>${nota.metodePembayaran}</td>
                 <td>
-                    <button class="btn btn-sm btn-info detail-nota premium" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;" data-index="${index}">
+                    <button class="btn btn-sm btn-danger detail-nota" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;" data-index="${index}">
                         <i class="fas fa-eye"></i> Detail
                     </button>
                     <button class="btn btn-sm btn-danger hapus-nota" style="border-radius: 16px;font-family: Nunito, sans-serif;box-shadow: 0px 6px 14px rgba(67,97,238,0.56);width: auto;" data-index="${index}">
@@ -302,48 +302,4 @@ if (filter.tanggalSelesai) endDate = new Date(filter.tanggalSelesai + 'T23:59:59
     // Muat nota saat halaman pertama kali dimuat
     muatNota();
 
-    // Backup Data
-    document.getElementById('btnBackup').addEventListener('click', () => {
-        const data = {
-            produk: JSON.parse(localStorage.getItem('produk') || '[]'),
-            nota: JSON.parse(localStorage.getItem('nota') || '[]'),
-            pengaturanToko: JSON.parse(localStorage.getItem('pengaturanToko') || '{}')
-        };
-        
-        const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `backup_${new Date().toISOString().split('T')[0]}.json`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    });
-
-    // Import Data
-    document.getElementById('btnImport').addEventListener('click', () => {
-        document.getElementById('fileImport').click();
-    });
-
-    // Perbaikan 3: Import data dengan pemanggilan fungsi yang benar
-    document.getElementById('fileImport').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            try {
-                const data = JSON.parse(event.target.result);
-                localStorage.setItem('produk', JSON.stringify(data.produk));
-                localStorage.setItem('nota', JSON.stringify(data.nota));
-                localStorage.setItem('pengaturanToko', JSON.stringify(data.pengaturanToko));
-                alert('Data berhasil diimpor!');
-                muatProduk(); // Diubah dari muatNota() ke muatProduk()
-            } catch (error) {
-                alert('Silahkan Refresh!');
-            }
-        };
-        reader.readAsText(file);
-    });
 });
