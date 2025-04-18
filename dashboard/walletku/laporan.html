@@ -13,78 +13,75 @@
   gtag('config', 'G-9BWCSTKSL7');
 </script>
 
-<!-- 404 & Browser Check -->
+<!-- Browser Check & 404 Handler -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {  
-    // 1. Check Browser Support
-    const supportedBrowsers = ['chrome', 'safari', 'edge'];
-    const userAgent = navigator.userAgent.toLowerCase();
-    let isSupported = false;
+    // 1. Daftar Browser yang Didukung (Chrome, Safari iOS, Edge)
+    const isChrome = /chrome|chromium|crios/i.test(navigator.userAgent) && !/edg|edge|opr|opera|android webview|fbav|instagram|twitter/i.test(navigator.userAgent);
+    const isSafari = /safari/i.test(navigator.userAgent) && /applewebkit/i.test(navigator.userAgent) && !/chrome|android|crios|fxios|fbav|instagram|twitter/i.test(navigator.userAgent);
+    const isEdge = /edg|edge|edga|edgios|edg\//i.test(navigator.userAgent);
 
-    // Check for Chrome, Safari (iOS), or Edge
-    if (userAgent.includes('chrome') && !userAgent.includes('edg')) {
-        isSupported = true;
-    } else if (userAgent.includes('safari') && !userAgent.includes('chrome') && !userAgent.includes('android')) {
-        // Safari (especially iOS) detection
-        isSupported = true;
-    } else if (userAgent.includes('edg') || userAgent.includes('edge')) {
-        isSupported = true;
-    }
+    // 2. Deteksi Browser dalam Aplikasi Sosial Media (Facebook, Instagram, Twitter, dll.)
+    const isInAppBrowser = 
+        /(FBAN|FBAV|Instagram|Twitter|Line|WhatsApp|Snapchat|Pinterest|LinkedIn)/i.test(navigator.userAgent) ||
+        /(tiktok|fbav|fb_iab|instagram_iab|twitter_iab)/i.test(navigator.userAgent.toLowerCase());
 
-    // Show modal if browser is not supported
-    if (!isSupported) {
+    // 3. Jika bukan browser yang didukung ATAU menggunakan browser dalam aplikasi sosial media
+    if (!(isChrome || isSafari || isEdge) || isInAppBrowser) {
+        // Buat modal peringatan
         const modalHTML = `
             <div class="modal fade" id="browserModal" tabindex="-1" aria-labelledby="browserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header bg-warning">
-                            <h5 class="modal-title" id="browserModalLabel">Browser Tidak Didukung</h5>
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title" id="browserModalLabel">⚠ Browser Tidak Didukung</h5>
                         </div>
                         <div class="modal-body">
-                            <p>Untuk pengalaman terbaik, silakan gunakan salah satu browser berikut:</p>
+                            <p>Anda membuka website ini melalui <strong>browser dalam aplikasi sosial media</strong> atau browser yang tidak didukung.</p>
+                            <p>Untuk pengalaman terbaik, silakan buka di:</p>
                             <ul>
-                                <li>Google Chrome</li>
-                                <li>Microsoft Edge</li>
-                                <li>Safari (iOS)</li>
+                                <li><strong>Google Chrome</strong></li>
+                                <li><strong>Microsoft Edge</strong></li>
+                                <li><strong>Safari (iOS)</strong></li>
                             </ul>
-                            <p class="text-danger">Fitur mungkin tidak berfungsi dengan baik pada browser Anda saat ini.</p>
+                            <p class="text-danger">Fitur mungkin tidak berfungsi dengan baik di browser saat ini.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Saya Mengerti</button>
+                            <a href="#" id="openInBrowserBtn" class="btn btn-success">Buka di Browser</a>
                         </div>
                     </div>
                 </div>
             </div>
         `;
         
-        // Add modal to body
+        // Tambahkan modal ke body
         document.body.insertAdjacentHTML('beforeend', modalHTML);
         
-        // Initialize and show modal
+        // Tampilkan modal
         const modal = new bootstrap.Modal(document.getElementById('browserModal'));
         modal.show();
+
+        // (Opsional) Tombol "Buka di Browser" untuk mengarahkan ke browser default
+        document.getElementById('openInBrowserBtn')?.addEventListener('click', function() {
+            const currentUrl = window.location.href;
+            window.open(currentUrl, '_system'); // (Hanya bekerja di mobile, jika didukung)
+        });
     }
 
-    // 2. 404 Page Check
-    // Skip if already on 404 page
+    // 4. Pemeriksaan 404 (Sama seperti sebelumnya)
     const currentPage = window.location.pathname.split("/").pop();  
-    if (!currentPage || currentPage === "404.html") {  
-        return;
-    }  
+    if (!currentPage || currentPage === "404.html") return;  
 
-    // Check if page exists
     fetch(currentPage)  
         .then(response => {  
-            if (!response.ok) {  
-                window.location.href = "404.html";  
-            }  
+            if (!response.ok) window.location.href = "404.html";  
         })  
         .catch(() => {  
             window.location.href = "404.html";  
         });  
 });
 </script>
-<!-- Selesai -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Laporan</title>
     <link rel="canonical" href="https://walletku.biz.id/dashboard/walletku/laporan.html">
