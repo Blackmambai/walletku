@@ -17,14 +17,14 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {  
     // 1. Daftar Browser yang Didukung (Chrome, Safari iOS, Edge)
-    const isChrome = /chrome|chromium|crios/i.test(navigator.userAgent) && !/edg|edge|opr|opera|android webview|fbav|instagram|twitter/i.test(navigator.userAgent);
-    const isSafari = /safari/i.test(navigator.userAgent) && /applewebkit/i.test(navigator.userAgent) && !/chrome|android|crios|fxios|fbav|instagram|twitter/i.test(navigator.userAgent);
+    const isChrome = /chrome|chromium|crios/i.test(navigator.userAgent) && !/edg|edge|opr|opera|android webview|fbav|instagram|twitter|threads/i.test(navigator.userAgent);
+    const isSafari = /safari/i.test(navigator.userAgent) && /applewebkit/i.test(navigator.userAgent) && !/chrome|android|crios|fxios|fbav|instagram|twitter|threads/i.test(navigator.userAgent);
     const isEdge = /edg|edge|edga|edgios|edg\//i.test(navigator.userAgent);
 
-    // 2. Deteksi Browser dalam Aplikasi Sosial Media (Facebook, Instagram, Twitter, dll.)
+    // 2. Deteksi Browser dalam Aplikasi Sosial Media (Threads, Facebook, Instagram, dll.)
     const isInAppBrowser = 
-        /(FBAN|FBAV|Instagram|Twitter|Line|WhatsApp|Snapchat|Pinterest|LinkedIn)/i.test(navigator.userAgent) ||
-        /(tiktok|fbav|fb_iab|instagram_iab|twitter_iab)/i.test(navigator.userAgent.toLowerCase());
+        /(FBAN|FBAV|Instagram|Twitter|Line|WhatsApp|Snapchat|Pinterest|LinkedIn|Threads)/i.test(navigator.userAgent) ||
+        /(tiktok|fbav|fb_iab|instagram_iab|twitter_iab|threads)/i.test(navigator.userAgent.toLowerCase());
 
     // 3. Jika bukan browser yang didukung ATAU menggunakan browser dalam aplikasi sosial media
     if (!(isChrome || isSafari || isEdge) || isInAppBrowser) {
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <h5 class="modal-title" id="browserModalLabel">⚠ Browser Tidak Didukung</h5>
                         </div>
                         <div class="modal-body">
-                            <p>Anda membuka website ini melalui <strong>browser dalam aplikasi sosial media</strong> atau browser yang tidak didukung.</p>
+                            <p>Anda membuka website ini melalui <strong>${isInAppBrowser ? "aplikasi sosial media (Threads, Instagram, dll.)" : "browser yang tidak didukung"}</strong>.</p>
                             <p>Untuk pengalaman terbaik, silakan buka di:</p>
                             <ul>
                                 <li><strong>Google Chrome</strong></li>
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // (Opsional) Tombol "Buka di Browser" untuk mengarahkan ke browser default
         document.getElementById('openInBrowserBtn')?.addEventListener('click', function() {
             const currentUrl = window.location.href;
-            window.open(currentUrl, '_system'); // (Hanya bekerja di mobile, jika didukung)
+            window.open(currentUrl, '_blank'); // Buka di tab baru (bisa diganti dengan deep link ke browser tertentu)
         });
     }
 
