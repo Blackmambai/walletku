@@ -12,6 +12,79 @@
 
   gtag('config', 'G-9BWCSTKSL7');
 </script>
+
+<!-- 404 & Browser Check -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {  
+    // 1. Check Browser Support
+    const supportedBrowsers = ['chrome', 'safari', 'edge'];
+    const userAgent = navigator.userAgent.toLowerCase();
+    let isSupported = false;
+
+    // Check for Chrome, Safari (iOS), or Edge
+    if (userAgent.includes('chrome') && !userAgent.includes('edg')) {
+        isSupported = true;
+    } else if (userAgent.includes('safari') && !userAgent.includes('chrome') && !userAgent.includes('android')) {
+        // Safari (especially iOS) detection
+        isSupported = true;
+    } else if (userAgent.includes('edg') || userAgent.includes('edge')) {
+        isSupported = true;
+    }
+
+    // Show modal if browser is not supported
+    if (!isSupported) {
+        const modalHTML = `
+            <div class="modal fade" id="browserModal" tabindex="-1" aria-labelledby="browserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-warning">
+                            <h5 class="modal-title" id="browserModalLabel">Browser Tidak Didukung</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>Untuk pengalaman terbaik, silakan gunakan salah satu browser berikut:</p>
+                            <ul>
+                                <li>Google Chrome</li>
+                                <li>Microsoft Edge</li>
+                                <li>Safari (iOS)</li>
+                            </ul>
+                            <p class="text-danger">Fitur mungkin tidak berfungsi dengan baik pada browser Anda saat ini.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Saya Mengerti</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        // Initialize and show modal
+        const modal = new bootstrap.Modal(document.getElementById('browserModal'));
+        modal.show();
+    }
+
+    // 2. 404 Page Check
+    // Skip if already on 404 page
+    const currentPage = window.location.pathname.split("/").pop();  
+    if (!currentPage || currentPage === "404.html") {  
+        return;
+    }  
+
+    // Check if page exists
+    fetch(currentPage)  
+        .then(response => {  
+            if (!response.ok) {  
+                window.location.href = "404.html";  
+            }  
+        })  
+        .catch(() => {  
+            window.location.href = "404.html";  
+        });  
+});
+</script>
+<!-- Selesai -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Item - by walletku.biz.id</title>
     <link rel="canonical" href="https://walletku.biz.id/dashboard/tokoku/item.html">
