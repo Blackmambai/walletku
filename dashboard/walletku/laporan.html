@@ -24,83 +24,21 @@ document.addEventListener("DOMContentLoaded", function() {
         return; // Jika halaman adalah 404, tidak perlu melakukan apa-apa  
     }  
 
-    // Mendapatkan user agent  
-    const userAgent = navigator.userAgent.toLowerCase();  
-
-    // Deteksi browser yang didukung  
-    const isIOS = /iphone|ipad|ipod/.test(userAgent);  
-    const isSafari = /safari/.test(userAgent) && !/chrome|chromium|crios|edg/i.test(userAgent);  
-    const isChrome = /chrome|chromium|crios/.test(userAgent) && !/edge|edg/i.test(userAgent);  
-    const isEdge = /edge|edg/i.test(userAgent);  
-
-    // Deteksi webview (contoh: 'wv' di Android WebView dan 'WebView' di iOS)
-    const isWebView = /wv|webview/i.test(userAgent) || (isIOS && !/safari/.test(userAgent));  
-
-    // Mendapatkan referrer URL
-    const referrer = document.referrer.toLowerCase();
-
-    
-   // Deteksi referrer dari media sosial Facebook, Threads atau Instagram
-   const isSocialMediaReferrer = /facebook\.com|threads\.net|instagram\.com/.test(referrer);
-
-   if (isSocialMediaReferrer) {
-       // Jika berasal dari social media lanjut cek keberadaan halaman saja
-       fetch(currentPage)
-           .then(response => {
-               if (!response.ok) {
-                   window.location.href = "404.html";
-               }
-           })
-           .catch(() => {
-               window.location.href = "404.html";
-           });
-   } else {
-       // Jika bukan berasal dari social media periksa browser & webview
-       if (!(isIOS && isSafari) && !isChrome && !isEdge || isWebView) { 
-            $('#browserModal').modal('show'); 
-            return; 
-       }
-
-       fetch(currentPage)
-           .then(response => {
-               if (!response.ok) {
-                   window.location.href = "404.html";
-               }
-           })
-           .catch(() => {
-               window.location.href ="404.html";
-           });
-   }
+    // Menggunakan fetch untuk memeriksa keberadaan halaman  
+    fetch(currentPage)  
+        .then(response => {  
+            if (!response.ok) {  
+                // Jika halaman tidak ditemukan, arahkan ke halaman 404  
+                window.location.href = "404.html";  
+            }  
+        })  
+        .catch(() => {  
+            // Jika terjadi kesalahan dalam fetch, arahkan ke halaman 404  
+            window.location.href = "404.html";  
+        });  
 });
 </script>
-
-<!-- Modal Bootstrap -->
-<div class="modal fade" id="browserModal" tabindex="-1" role="dialog" aria-labelledby="browserModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-     <div class="modal-content">
-         <div class="modal-header">
-             <h5 class="modal-title" id="browserModalLabel">Browser Tidak Didukung</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label ="Close">
-                 <span aria-hidden=true>&times;</span>
-             </button>
-         </div>
-         <div class ="modal-body">
-            Mohon gunakan browser berikut untuk mengakses situs web ini:
-            <ul>
-                <li>iOS Safari</li>
-                <li>Google Chrome</li>
-                <li>Microsoft Edge</li>
-            </ul>
-            Penggunaan aplikasi selain browser biasa (termasuk WebView) tidak diizinkan.
-         </div >
-         <div class ="modal-footer">
-             <button type ="button"class ="btn btn-secondary"
-                     data-dismiss ="modal">Tutup
-             </button >
-          </ div >
-      </ div >
-  </ div >
-</ div >
+<!-- Selesai -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Laporan</title>
     <link rel="canonical" href="https://walletku.biz.id/dashboard/walletku/laporan.html">
