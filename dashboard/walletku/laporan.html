@@ -382,51 +382,167 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="d-flex flex-column" style="height: auto;">
-                                                    <h1 style="text-align:center;">Image Upload to Multiple Placeholders</h1>
-                                                    <p class="instructions">Drag and drop an image below, or click "Upload to All" to apply the same image to all placeholders, or click individual placeholders to change them.</p>
-                                                    <div class="drop-zone" id="dropZone">
-                                                        <div class="icon"><span>⬆</span></div>
-                                                        <p>Drag &amp; drop your image here</p>
-                                                        <p><small>or</small></p><button id="uploadButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" class="shadow-luma">Select Image</button>
-                                                    </div><input type="file" accept="image/*" id="upload" style="display:none;"><input type="file" accept="image/*" id="singleUpload" style="display:none;">
-                                                    <div class="buttons"><button id="saveButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" class="shadow-luma">Save All Images</button><button id="deleteButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" class="shadow-luma">Delete All Images</button></div><script>
+                                                <div class="d-flex flex-column" style="height: auto;"><style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            object-fit: cover;
+            margin: 10px;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-pic.empty {
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 12px;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+            min-height: 300px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        button#deleteButton {
+            background-color: #f44336;
+        }
+        
+        button#deleteButton:hover {
+            background-color: #d32f2f;
+        }
+        
+        .instructions {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .drop-zone.active {
+            border-color: #4CAF50;
+            background-color: #e8f5e9;
+        }
+        
+        .drop-zone p {
+            margin: 0;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .drop-zone .icon {
+            font-size: 48px;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+    </style>
+
+
+    <h1 style="text-align: center;">Image Upload to Multiple Placeholders</h1>
+    <p class="instructions">Drag and drop an image below or click "Upload Image" to apply the same image to all placeholders</p>
+
+    <!-- Drop zone for drag and drop -->
+    <div class="drop-zone" id="dropZone">
+        <div class="icon">⬆</div>
+        <p>Drag & drop your image here</p>
+        <p><small>or</small></p>
+        <button id="uploadButton">Select Image</button>
+    </div>
+
+    <!-- Input file upload (hidden) -->
+    <input type="file" id="upload" accept="image/*" style="display:none;" />
+
+    <!-- Container for image placeholders -->
+    <div class="container">
+        <img src="" alt="Profile Picture 1" class="profile-pic empty">1</img>
+        <img src="" alt="Profile Picture 2" class="profile-pic empty">2</img>
+        <img src="" alt="Profile Picture 3" class="profile-pic empty">3</img>
+        <img src="" alt="Profile Picture 4" class="profile-pic empty">4</img>
+        <img src="" alt="Profile Picture 5" class="profile-pic empty">5</img>
+        <img src="" alt="Profile Picture 6" class="profile-pic empty">6</img>
+        <img src="" alt="Profile Picture 7" class="profile-pic empty">7</img>
+        <img src="" alt="Profile Picture 8" class="profile-pic empty">8</img>
+        <img src="" alt="Profile Picture 9" class="profile-pic empty">9</img>
+        <img src="" alt="Profile Picture 10" class="profile-pic empty">10</img>
+    </div>
+
+    <!-- Buttons -->
+    <div class="buttons">
+        <button id="saveButton">Save All Images</button>
+        <button id="deleteButton">Delete All Images</button>
+    </div>
+
+    <script>
     $(document).ready(function() {
         // Initialize empty placeholders
         function initializePlaceholders() {
             $('.profile-pic').each(function() {
                 if (!$(this).attr('src') || $(this).attr('src') === '') {
                     $(this).addClass('empty');
-                    $(this).html($(this).data('index') + 1);
+                    $(this).html($(this).index() + 1);
                 }
             });
         }
         
         // Handle file upload button
-        $('#uploadButton').on('click', function(e) {
-            e.stopPropagation();
+        $('#uploadButton').on('click', function() {
             $('#upload').click();
-        });
-
-        // Handle individual image clicks
-        $('.profile-pic').on('click', function() {
-            $('#singleUpload').data('target', $(this)).click();
         });
 
         // Handle file selection for all images
         $('#upload').on('change', function() {
-            handleFileSelection(this.files[0], true);
-        });
-
-        // Handle file selection for single image
-        $('#singleUpload').on('change', function() {
             if (this.files && this.files[0]) {
-                handleFileSelection(this.files[0], false, $(this).data('target'));
+                handleFileSelection(this.files[0]);
             }
         });
 
-        // Function to handle file selection (for both drag-drop and file input)
-        function handleFileSelection(file, applyToAll, targetElement) {
+        // Function to handle file selection
+        function handleFileSelection(file) {
             if (!file) return;
             
             // Validate file type
@@ -451,19 +567,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             
             var reader = new FileReader();
             reader.onload = function(e) {
-                if (applyToAll) {
-                    // Apply to all images
-                    $('.profile-pic').each(function() {
-                        $(this).attr('src', e.target.result);
-                        $(this).removeClass('empty');
-                        $(this).html('');
-                    });
-                } else if (targetElement) {
-                    // Apply to single image
-                    targetElement.attr('src', e.target.result);
-                    targetElement.removeClass('empty');
-                    targetElement.html('');
-                }
+                // Apply to all images
+                $('.profile-pic').each(function() {
+                    $(this).attr('src', e.target.result);
+                    $(this).removeClass('empty');
+                    $(this).html('');
+                });
             }
             reader.onerror = function() {
                 Swal.fire({
@@ -477,12 +586,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         // Drag and drop functionality
         const dropZone = document.getElementById('dropZone');
-        const imageContainer = document.getElementById('imageContainer');
         
         // Prevent default drag behaviors
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             dropZone.addEventListener(eventName, preventDefaults, false);
-            imageContainer.addEventListener(eventName, preventDefaults, false);
         });
         
         function preventDefaults(e) {
@@ -515,37 +622,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             const files = dt.files;
             
             if (files.length > 0) {
-                handleFileSelection(files[0], true);
+                handleFileSelection(files[0]);
             }
         }
-        
-        // Drag and drop for individual images
-        $('.profile-pic').each(function() {
-            const img = this;
-            
-            ['dragenter', 'dragover'].forEach(eventName => {
-                img.addEventListener(eventName, function(e) {
-                    preventDefaults(e);
-                    $(img).addClass('drag-over');
-                }, false);
-            });
-            
-            ['dragleave', 'drop'].forEach(eventName => {
-                img.addEventListener(eventName, function(e) {
-                    preventDefaults(e);
-                    $(img).removeClass('drag-over');
-                }, false);
-            });
-            
-            img.addEventListener('drop', function(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
-                
-                if (files.length > 0) {
-                    handleFileSelection(files[0], false, $(img));
-                }
-            }, false);
-        });
 
         // Save all images to local storage
         $('#saveButton').on('click', function() {
@@ -629,8 +708,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         loadSavedImages();
         initializePlaceholders();
     });
-    </script>
-                                                </div>
+    </script></div>
                                             </div>
                                         </div>
                                     </div>
