@@ -396,28 +396,169 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="d-flex justify-content-center" style="height: auto;"><input type="file" id="upload" style="display:none;" />
-<button id="uploadButton">Upload Image</button>
-    <button id="saveButton">Save Images</button>
-    <button id="deleteButton">Delete All Images</button>
-
-    <script>
+                                        <div class="d-flex flex-column" style="height: auto;">
+                                            <h1 style="text-align:center;">Image Upload to Multiple Placeholders</h1>
+                                            <p class="instructions">Drag and drop an image below, or click "Upload to All" to apply the same image to all placeholders, or click individual placeholders to change them.</p>
+                                            <div class="drop-zone" id="dropZone">
+                                                <div class="icon"><span>⬆</span></div>
+                                                <p>Drag &amp; drop your image here</p>
+                                                <p><small>or</small></p><button id="uploadButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" class="shadow-luma">Select Image</button>
+                                            </div><input type="file" accept="image/*" id="upload" style="display:none;"><input type="file" accept="image/*" id="singleUpload" style="display:none;">
+                                            <div class="buttons"><button id="saveButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" class="shadow-luma">Save All Images</button><button id="deleteButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;padding-top: 5px;padding-bottom: 5px;padding-right: 10px;padding-left: 10px;" class="shadow-luma">Delete All Images</button></div><script>
     $(document).ready(function() {
+        // Initialize empty placeholders
+        function initializePlaceholders() {
+            $('.profile-pic').each(function() {
+                if (!$(this).attr('src') || $(this).attr('src') === '') {
+                    $(this).addClass('empty');
+                    $(this).html($(this).data('index') + 1);
+                }
+            });
+        }
+        
         // Handle file upload button
-        $('#uploadButton').on('click', function() {
-            $('#upload').click(); // Buka dialog pilih file
+        $('#uploadButton').on('click', function(e) {
+            e.stopPropagation();
+            $('#upload').click();
         });
 
-        // Handle file selection
+        // Handle individual image clicks
+        $('.profile-pic').on('click', function() {
+            $('#singleUpload').data('target', $(this)).click();
+        });
+
+        // Handle file selection for all images
         $('#upload').on('change', function() {
+            handleFileSelection(this.files[0], true);
+        });
+
+        // Handle file selection for single image
+        $('#singleUpload').on('change', function() {
             if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    // Terapkan gambar yang sama ke semua elemen dengan class 'profile-pic'
-                    $('.profile-pic').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
+                handleFileSelection(this.files[0], false, $(this).data('target'));
             }
+        });
+
+        // Function to handle file selection (for both drag-drop and file input)
+        function handleFileSelection(file, applyToAll, targetElement) {
+            if (!file) return;
+            
+            // Validate file type
+            if (!file.type.match('image.*')) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid File',
+                    text: 'Please select an image file (JPEG, PNG, etc.)'
+                });
+                return;
+            }
+            
+            // Validate file size (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'File Too Large',
+                    text: 'Please select an image smaller than 2MB'
+                });
+                return;
+            }
+            
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                if (applyToAll) {
+                    // Apply to all images
+                    $('.profile-pic').each(function() {
+                        $(this).attr('src', e.target.result);
+                        $(this).removeClass('empty');
+                        $(this).html('');
+                    });
+                } else if (targetElement) {
+                    // Apply to single image
+                    targetElement.attr('src', e.target.result);
+                    targetElement.removeClass('empty');
+                    targetElement.html('');
+                }
+            }
+            reader.onerror = function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to read the image file'
+                });
+            }
+            reader.readAsDataURL(file);
+        }
+
+        // Drag and drop functionality
+        const dropZone = document.getElementById('dropZone');
+        const imageContainer = document.getElementById('imageContainer');
+        
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+            imageContainer.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        // Highlight drop zone when item is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            dropZone.classList.add('active');
+        }
+        
+        function unhighlight() {
+            dropZone.classList.remove('active');
+        }
+        
+        // Handle dropped files
+        dropZone.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                handleFileSelection(files[0], true);
+            }
+        }
+        
+        // Drag and drop for individual images
+        $('.profile-pic').each(function() {
+            const img = this;
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                img.addEventListener(eventName, function(e) {
+                    preventDefaults(e);
+                    $(img).addClass('drag-over');
+                }, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                img.addEventListener(eventName, function(e) {
+                    preventDefaults(e);
+                    $(img).removeClass('drag-over');
+                }, false);
+            });
+            
+            img.addEventListener('drop', function(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length > 0) {
+                    handleFileSelection(files[0], false, $(img));
+                }
+            }, false);
         });
 
         // Save all images to local storage
@@ -425,48 +566,85 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             var images = [];
             $('.profile-pic').each(function() {
                 var src = $(this).attr('src');
-                if (src) {
-                    images.push(src);
-                }
+                images.push(src || '');
             });
-            if (images.length > 0) {
+            
+            try {
                 localStorage.setItem('profileImages', JSON.stringify(images));
                 Swal.fire({
                     icon: 'success',
                     title: 'Saved!',
-                    text: 'Semua gambar profil telah disimpan.'
+                    text: 'All profile images have been saved.',
+                    timer: 2000,
+                    showConfirmButton: false
                 });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Tidak ada gambar untuk disimpan.'
-                });
+            } catch (e) {
+                if (e.name === 'QuotaExceededError') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Storage Full',
+                        text: 'Your browser storage is full. Could not save images.'
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to save images to storage.'
+                    });
+                }
             }
         });
 
-        // Delete all images from local storage and page
+        // Delete all images with confirmation
         $('#deleteButton').on('click', function() {
-            $('.profile-pic').attr('src', '');
-            localStorage.removeItem('profileImages');
             Swal.fire({
-                icon: 'success',
-                title: 'Deleted!',
-                text: 'Semua gambar profil telah dihapus.'
+                title: 'Are you sure?',
+                text: "This will delete all images and cannot be undone!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete all!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('.profile-pic').attr('src', '');
+                    initializePlaceholders();
+                    localStorage.removeItem('profileImages');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'All profile images have been deleted.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
             });
         });
 
         // Load saved images from local storage on page load
-        var savedImages = JSON.parse(localStorage.getItem('profileImages'));
-        if (savedImages && savedImages.length > 0) {
-            $('.profile-pic').each(function(index) {
-                if (index < savedImages.length) {
-                    $(this).attr('src', savedImages[index]);
+        function loadSavedImages() {
+            try {
+                var savedImages = JSON.parse(localStorage.getItem('profileImages'));
+                if (savedImages && savedImages.length > 0) {
+                    $('.profile-pic').each(function(index) {
+                        if (index < savedImages.length && savedImages[index]) {
+                            $(this).attr('src', savedImages[index]);
+                            $(this).removeClass('empty');
+                            $(this).html('');
+                        }
+                    });
                 }
-            });
+            } catch (e) {
+                console.error("Error loading saved images:", e);
+            }
         }
+
+        // Initialize the page
+        loadSavedImages();
+        initializePlaceholders();
     });
-    </script></div>
+    </script>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
