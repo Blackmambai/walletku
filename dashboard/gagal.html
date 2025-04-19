@@ -85,6 +85,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://accounts.google.com/gsi/client"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -190,6 +191,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                         </svg>
                                     </div>
                                     <div class="modal-body">
+                                        <div class="d-flex justify-content-center" style="height: auto;"><img class="border rounded-circle img-profile profile-pic" src="../assets/img/icon/image2.jpeg" style="object-fit: cover;width: 80px;height: 80px;max-height: initial;"></div>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
@@ -218,6 +220,76 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <div class="d-flex justify-content-center" style="height: auto;"><button id="uploadButton">Upload Image</button>
+    <button id="saveButton">Save Images</button>
+    <button id="deleteButton">Delete All Images</button>
+
+    <script>
+    $(document).ready(function() {
+        // Handle file upload button
+        $('#uploadButton').on('click', function() {
+            $('#upload').click(); // Buka dialog pilih file
+        });
+
+        // Handle file selection
+        $('#upload').on('change', function() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // Terapkan gambar yang sama ke semua elemen dengan class 'profile-pic'
+                    $('.profile-pic').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Save all images to local storage
+        $('#saveButton').on('click', function() {
+            var images = [];
+            $('.profile-pic').each(function() {
+                var src = $(this).attr('src');
+                if (src) {
+                    images.push(src);
+                }
+            });
+            if (images.length > 0) {
+                localStorage.setItem('profileImages', JSON.stringify(images));
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Saved!',
+                    text: 'Semua gambar profil telah disimpan.'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Tidak ada gambar untuk disimpan.'
+                });
+            }
+        });
+
+        // Delete all images from local storage and page
+        $('#deleteButton').on('click', function() {
+            $('.profile-pic').attr('src', '');
+            localStorage.removeItem('profileImages');
+            Swal.fire({
+                icon: 'success',
+                title: 'Deleted!',
+                text: 'Semua gambar profil telah dihapus.'
+            });
+        });
+
+        // Load saved images from local storage on page load
+        var savedImages = JSON.parse(localStorage.getItem('profileImages'));
+        if (savedImages && savedImages.length > 0) {
+            $('.profile-pic').each(function(index) {
+                if (index < savedImages.length) {
+                    $(this).attr('src', savedImages[index]);
+                }
+            });
+        }
+    });
+    </script></div>
                                     </div>
                                 </div>
                             </div>

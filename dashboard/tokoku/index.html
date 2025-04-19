@@ -85,6 +85,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://accounts.google.com/gsi/client"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -230,8 +231,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2" style="font-family: Nunito, sans-serif;color: rgb(0,0,0);font-weight: bold;"><span style="font-weight: normal !important;">Halo!&nbsp;</span><span class="d-none d-lg-inline username" style="font-family: Nunito, sans-serif;margin-right: 0px;">User</span></span><img class="border rounded-circle img-profile" src="../../assets/img/icon/image3.jpeg"></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in" style="border-radius: 16px;border: 2px solid rgb(225,225,230) ;"><a class="dropdown-item" href="#" style="padding-top: 8px;padding-bottom: 8px;color: rgb(40,40,40);font-family: Nunito, sans-serif;font-weight: bold;" data-bs-target="#profile-user" data-bs-toggle="modal"><i class="fas fa-user fa-sm fa-fw me-2" style="color: rgb(40,40,81);"></i>&nbsp;Profile</a>
+                                <div class="nav-item dropdown show no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="true" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2" style="font-family: Nunito, sans-serif;color: rgb(0,0,0);font-weight: bold;"><span style="font-weight: normal !important;">Halo!&nbsp;</span><span class="d-none d-lg-inline username" style="font-family: Nunito, sans-serif;margin-right: 0px;">User</span></span><img class="border rounded-circle img-profile profile-pic" src="../../assets/img/icon/image3.jpeg"></a>
+                                    <div class="dropdown-menu show shadow dropdown-menu-end animated--grow-in" data-bs-popper="none" style="border-radius: 16px;border: 2px solid rgb(225,225,230) ;"><a class="dropdown-item" href="#" style="padding-top: 8px;padding-bottom: 8px;color: rgb(40,40,40);font-family: Nunito, sans-serif;font-weight: bold;" data-bs-target="#profile-user" data-bs-toggle="modal"><i class="fas fa-user fa-sm fa-fw me-2" style="color: rgb(40,40,81);"></i>&nbsp;Profile</a>
                                         <div class="dropdown-divider"></div><a class="dropdown-item" style="padding-top: 8px;padding-bottom: 8px;color: rgb(40,40,40);font-family: Nunito, sans-serif;font-weight: bold;" onclick="localStorage.removeItem(&#39;userData&#39;)" href="../../index.html" rel="prev"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2" style="color: rgb(40,40,81);"></i>&nbsp;Logout</a>
                                     </div>
                                 </div>
@@ -364,6 +365,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                         </svg>
                                     </div>
                                     <div class="modal-body">
+                                        <div class="d-flex justify-content-center" style="height: auto;"><img class="border rounded-circle img-profile profile-pic" src="../../assets/img/icon/image2.jpeg" style="object-fit: cover;width: 80px;height: 80px;max-height: initial;"></div>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
@@ -392,6 +394,76 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <div class="d-flex justify-content-center" style="height: auto;"><button id="uploadButton">Upload Image</button>
+    <button id="saveButton">Save Images</button>
+    <button id="deleteButton">Delete All Images</button>
+
+    <script>
+    $(document).ready(function() {
+        // Handle file upload button
+        $('#uploadButton').on('click', function() {
+            $('#upload').click(); // Buka dialog pilih file
+        });
+
+        // Handle file selection
+        $('#upload').on('change', function() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // Terapkan gambar yang sama ke semua elemen dengan class 'profile-pic'
+                    $('.profile-pic').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Save all images to local storage
+        $('#saveButton').on('click', function() {
+            var images = [];
+            $('.profile-pic').each(function() {
+                var src = $(this).attr('src');
+                if (src) {
+                    images.push(src);
+                }
+            });
+            if (images.length > 0) {
+                localStorage.setItem('profileImages', JSON.stringify(images));
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Saved!',
+                    text: 'Semua gambar profil telah disimpan.'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Tidak ada gambar untuk disimpan.'
+                });
+            }
+        });
+
+        // Delete all images from local storage and page
+        $('#deleteButton').on('click', function() {
+            $('.profile-pic').attr('src', '');
+            localStorage.removeItem('profileImages');
+            Swal.fire({
+                icon: 'success',
+                title: 'Deleted!',
+                text: 'Semua gambar profil telah dihapus.'
+            });
+        });
+
+        // Load saved images from local storage on page load
+        var savedImages = JSON.parse(localStorage.getItem('profileImages'));
+        if (savedImages && savedImages.length > 0) {
+            $('.profile-pic').each(function(index) {
+                if (index < savedImages.length) {
+                    $(this).attr('src', savedImages[index]);
+                }
+            });
+        }
+    });
+    </script></div>
                                     </div>
                                 </div>
                             </div>
