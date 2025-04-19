@@ -367,7 +367,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                         </svg>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="d-flex justify-content-center" style="height: auto;"><img class="border rounded-circle img-profile profile-pic" style="object-fit: cover;width: 80px;height: 80px;max-height: initial;"></div>
+                                        <div class="d-flex justify-content-center" style="height: auto;margin-bottom: 10px;"><img class="border rounded-circle img-profile profile-pic" style="object-fit: cover;width: 80px;height: 80px;max-height: initial;"></div>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
@@ -387,24 +387,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                                     </tr>
                                                     <tr>
                                                         <td style="font-family: Nunito, sans-serif;">Status</td>
-                                                        <td class="status" style="font-family: Nunito, sans-serif;">status</td>
-                                                    </tr>
-                                                    <tr class="premium2">
-                                                        <td style="font-family: Nunito, sans-serif;">Upgrade</td>
                                                         <td class="status"><button class="btn btn-primary shadow-luma" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;">Upgrade Account</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="text-center d-flex flex-column" style="height: auto;">
-                                            <h1 style="text-align:center;">Image Upload to Multiple Placeholders</h1>
-                                            <p class="instructions">Drag and drop an image below or click "Upload Image" to apply the same image to all placeholders</p>
                                             <div class="d-flex flex-column justify-content-center align-items-center drop-zone" id="dropZone" style="border-radius: 16px;border: 3px dashed rgba(0,30,255,0.26);padding: 10px;margin-bottom: 10px;">
                                                 <div class="icon"><span>⬆</span></div>
                                                 <p>Drag &amp; drop your image here</p>
-                                                <p><small>or</small></p><button id="uploadButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;background: #4e73df;color: rgb(255,255,255);padding: 5px;padding-right: 10px;padding-left: 10px;" class="shadow-luma">Select Image</button>
+                                                <p><small>or</small></p><button id="uploadButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;background: #4e73df;color: rgb(255,255,255);padding: 5px;padding-right: 10px;padding-left: 10px;border-width: 0px;" class="shadow-luma">Select Image</button>
                                             </div><input type="file" accept="image/*" id="upload" style="display:none;">
-                                            <div class="buttons"><button id="saveButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;background: #4e73df;color: rgb(255,255,255);padding: 5px;padding-right: 10px;padding-left: 10px;" class="shadow-luma">Save All Images</button><button id="deleteButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;background: #4e73df;color: rgb(255,255,255);padding: 5px;padding-right: 10px;padding-left: 10px;" class="shadow-luma">Delete All Images</button></div><script>
+                                            <div class="d-flex justify-content-center buttons" style="gap: 10px;"><button id="saveButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;background: #4e73df;color: rgb(255,255,255);padding: 5px;padding-right: 10px;padding-left: 10px;border-width: 0px;" class="shadow-luma">Save All Images</button><button id="deleteButton" type="button" style="font-family: Nunito, sans-serif;border-radius: 16px;background: #4e73df;color: rgb(255,255,255);padding: 5px;padding-right: 10px;padding-left: 10px;border-width: 0px;" class="shadow-luma">Delete All Images</button></div><script>
     $(document).ready(function() {
         // Initialize empty placeholders
         function initializePlaceholders() {
