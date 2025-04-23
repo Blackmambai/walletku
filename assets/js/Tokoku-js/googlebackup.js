@@ -1,249 +1,256 @@
 // googlebackup.js
 document.addEventListener('DOMContentLoaded', () => {
-    // Google Drive API configuration
-    const CLIENT_ID = '362387001717-qd55fokbba192mjd97t61b3jslbvqp47.apps.googleusercontent.com'; // Replace with your actual client ID
-    const API_KEY = 'AIzaSyCrnA2v4briyn9mUcRkMTcADdFJNa8CijQ'; // Replace with your actual API key
+    // Konfigurasi Google Drive API
+    const CLIENT_ID = '362387001717-qd55fokbba192mjd97t61b3jslbvqp47.apps.googleusercontent.com';
+    const API_KEY = 'AIzaSyCrnA2v4briyn9mUcRkMTcADdFJNa8CijQ';
     const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
     const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+
+    // Status API
+    let isGoogleClientInitialized = false;
+    let isPickerInitialized = false;
 
     // DOM Elements
     const btnGoogleBackup = document.getElementById('btnGoogleBackup');
     const btnGoogleImport = document.getElementById('btnGoogleImport');
     const googleAuthStatus = document.getElementById('googleAuthStatus');
-    
-    // Initialize Google API client
-    function initGoogleClient() {
-        gapi.load('client:auth2', () => {
-            gapi.client.init({
+
+    // 1. Inisialisasi API Google
+    async function initializeGoogleAPIs() {
+        try {
+            // Muat library Google API
+            await new Promise((resolve, reject) => {
+                if (window.gapi) return resolve();
+                
+                const script = document.createElement('script');
+                script.src = 'https://apis.google.com/js/api.js';
+                script.async = true;
+                script.defer = true;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+
+            // Inisialisasi Client API
+            await new Promise((resolve) => gapi.load('client:auth2', resolve));
+            await gapi.client.init({
                 apiKey: API_KEY,
                 clientId: CLIENT_ID,
                 discoveryDocs: DISCOVERY_DOCS,
-                scope: SCOPES
-            }).then(() => {
-                // Listen for sign-in state changes
-                gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-                // Handle initial sign-in state
-                updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-            }).catch(error => {
-                console.error('Error initializing Google API:', error);
-                showError('Gagal menginisialisasi Google API');
+                scope: SCOPES,
+                redirect_uri: window.location.origin,
+                ux_mode: 'redirect'
             });
-        });
+            
+            isGoogleClientInitialized = true;
+            console.log('Google Client API initialized');
+
+            // Muat Picker API
+            await new Promise((resolve) => gapi.load('picker', resolve));
+            isPickerInitialized = true;
+            console.log('Google Picker API initialized');
+
+            // Setel listener status login
+            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+            updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+
+        } catch (error) {
+            console.error('Gagal inisialisasi:', error);
+            showError(`Gagal memuat Google API: ${error.message}`);
+        }
     }
 
-    // Update UI based on sign-in status
+    // 2. Update UI status login
     function updateSigninStatus(isSignedIn) {
         if (isSignedIn) {
             googleAuthStatus.innerHTML = `
                 <span class="text-success">
                     <i class="fas fa-check-circle"></i> Terhubung dengan Google Drive
-                </span>
-            `;
-            btnGoogleBackup.disabled = false;
-            btnGoogleImport.disabled = false;
+                </span>`;
+            toggleButtons(true);
         } else {
             googleAuthStatus.innerHTML = `
                 <span class="text-danger">
                     <i class="fas fa-times-circle"></i> Tidak terhubung dengan Google Drive
-                </span>
-            `;
-            btnGoogleBackup.disabled = true;
-            btnGoogleImport.disabled = true;
+                </span>`;
+            toggleButtons(false);
         }
     }
 
-    // Handle Google Sign-In
-    function handleGoogleSignIn() {
-        gapi.auth2.getAuthInstance().signIn().then(() => {
-            Swal.fire({
-                title: 'Berhasil Login',
-                text: 'Anda sekarang terhubung dengan Google Drive',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        }).catch(error => {
-            console.error('Error signing in:', error);
-            showError('Gagal login ke Google');
-        });
+    // 3. Fungsi toggle tombol
+    function toggleButtons(enabled) {
+        if (btnGoogleBackup) btnGoogleBackup.disabled = !enabled;
+        if (btnGoogleImport) btnGoogleImport.disabled = !enabled;
     }
 
-    // Handle Google Sign-Out
-    function handleGoogleSignOut() {
-        gapi.auth2.getAuthInstance().signOut().then(() => {
-            Swal.fire({
-                title: 'Berhasil Logout',
-                text: 'Anda telah keluar dari Google Drive',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        });
+    // 4. Handle Login Google
+    async function handleGoogleSignIn() {
+        if (!isGoogleClientInitialized) {
+            showError('Google API belum siap');
+            return;
+        }
+        
+        try {
+            await gapi.auth2.getAuthInstance().signIn();
+            Swal.fire('Berhasil Login', 'Anda sekarang terhubung dengan Google Drive', 'success');
+        } catch (error) {
+            console.error('Login error:', error);
+            showError(`Gagal login: ${error.error || error.details}`);
+        }
     }
 
-    // Backup to Google Drive
+    // 5. Handle Backup ke Google Drive
     async function backupToGoogleDrive() {
         try {
-            // Show loading indicator
+            await checkAPIsReady();
+            
             const swalInstance = Swal.fire({
                 title: 'Membuat Backup',
-                text: 'Sedang mengupload data ke Google Drive...',
+                html: 'Sedang mengupload data...',
                 allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
+                didOpen: () => Swal.showLoading()
             });
 
-            // Prepare backup data
-            const data = {
-                produk: JSON.parse(localStorage.getItem('produk') || '[]'),
-                nota: JSON.parse(localStorage.getItem('nota') || '[]'),
-                pengaturanToko: JSON.parse(localStorage.getItem('pengaturanToko') || '{}')
+            // Prepare data
+            const backupData = {
+                produk: JSON.parse(localStorage.getItem('produk') || [],
+                nota: JSON.parse(localStorage.getItem('nota') || [],
+                pengaturanToko: JSON.parse(localStorage.getItem('pengaturanToko') || {},
+                metadata: {
+                    version: 1.2,
+                    created: new Date().toISOString()
+                }
             };
 
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const metadata = {
-                name: `backup_${new Date().toISOString().split('T')[0]}.json`,
-                mimeType: 'application/json',
-                parents: ['root'] // You can specify a folder ID here if needed
-            };
-
-            // Upload file to Google Drive
+            // Upload ke Google Drive
             const accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
-            const form = new FormData();
-            form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-            form.append('file', blob);
+            const formData = new FormData();
+            formData.append('metadata', new Blob([JSON.stringify({
+                name: `backup_${Date.now()}.json`,
+                parents: ['root']
+            })], { type: 'application/json' }));
+            
+            formData.append('file', new Blob([JSON.stringify(backupData)], { type: 'application/json' }));
 
             const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
                 method: 'POST',
-                headers: new Headers({ 'Authorization': 'Bearer ' + accessToken }),
-                body: form
+                headers: { 'Authorization': `Bearer ${accessToken}` },
+                body: formData
             });
 
-            const result = await response.json();
-
-            // Close loading indicator
+            if (!response.ok) throw await response.json();
+            
             await swalInstance.close();
-
-            if (response.ok) {
-                Swal.fire({
-                    title: 'Backup Berhasil',
-                    text: 'Data telah berhasil di-backup ke Google Drive',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-            } else {
-                throw new Error(result.error.message || 'Gagal mengupload ke Google Drive');
-            }
+            Swal.fire('Backup Berhasil!', 'Data telah disimpan ke Google Drive', 'success');
+            
         } catch (error) {
             console.error('Backup error:', error);
-            showError(`Gagal membuat backup: ${error.message}`);
+            showError(`Gagal backup: ${error.error?.message || error.message}`);
         }
     }
 
-    // Import from Google Drive
+    // 6. Handle Import dari Google Drive
     async function importFromGoogleDrive() {
         try {
-            // Show file picker
-            const pickerResponse = await new Promise((resolve, reject) => {
+            await checkAPIsReady();
+            
+            // Pilih file
+            const file = await new Promise((resolve, reject) => {
                 const picker = new google.picker.PickerBuilder()
-                    .addView(new google.picker.DocsView().setMimeTypes('application/json'))
+                    .addView(new google.picker.DocsView()
+                        .setMimeTypes('application/json')
+                        .setIncludeFolders(true))
                     .setOAuthToken(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token)
                     .setDeveloperKey(API_KEY)
                     .setCallback(data => {
                         if (data.action === google.picker.Action.PICKED) {
                             resolve(data.docs[0]);
-                        } else if (data.action === google.picker.Action.CANCEL) {
-                            reject(new Error('User canceled file selection'));
+                        } else {
+                            reject('User membatalkan pemilihan file');
                         }
                     })
+                    .setOrigin(window.location.origin)
                     .build();
                 picker.setVisible(true);
             });
 
-            // Show loading indicator
+            // Download file
             const swalInstance = Swal.fire({
-                title: 'Mengimpor Data',
-                text: 'Sedang memproses data dari Google Drive...',
+                title: 'Memproses File',
+                html: 'Sedang memuat data...',
                 allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
+                didOpen: () => Swal.showLoading()
             });
 
-            // Download the selected file
-            const response = await gapi.client.drive.files.get({
-                fileId: pickerResponse.id,
-                alt: 'media'
+            const response = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`, {
+                headers: { 'Authorization': `Bearer ${gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token}` }
             });
 
-            const data = response.result;
+            if (!response.ok) throw await response.json();
+            
+            const data = await response.json();
 
-            // Validate the imported data
+            // Validasi data
             if (!data.produk || !data.nota || !data.pengaturanToko) {
-                throw new Error('Format file tidak valid');
+                throw new Error('Format file backup tidak valid');
             }
 
-            // Save to local storage
+            // Konfirmasi
+            const confirm = await Swal.fire({
+                title: 'Yakin ingin mengimpor?',
+                text: 'Semua data saat ini akan diganti!',
+                icon: 'warning',
+                showCancelButton: true
+            });
+
+            if (!confirm.isConfirmed) return;
+
+            // Simpan ke localStorage
             localStorage.setItem('produk', JSON.stringify(data.produk));
             localStorage.setItem('nota', JSON.stringify(data.nota));
             localStorage.setItem('pengaturanToko', JSON.stringify(data.pengaturanToko));
 
-            // Close loading indicator
             await swalInstance.close();
+            Swal.fire('Import Berhasil!', 'Halaman akan direfresh...', 'success').then(() => location.reload());
 
-            Swal.fire({
-                title: 'Import Berhasil',
-                text: 'Data berhasil diimpor dari Google Drive! Halaman akan direfresh.',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            }).then(() => location.reload());
         } catch (error) {
             console.error('Import error:', error);
-            showError(`Gagal mengimport data: ${error.message}`);
+            showError(`Gagal import: ${error.error?.message || error.message}`);
         }
     }
 
-    // Helper function to show error messages
-    function showError(message) {
-        Swal.fire({
-            title: 'Error',
-            text: message,
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-    }
-
-    // Event Listeners
-    if (btnGoogleBackup) {
-        btnGoogleBackup.addEventListener('click', backupToGoogleDrive);
-    }
-
-    if (btnGoogleImport) {
-        btnGoogleImport.addEventListener('click', importFromGoogleDrive);
-    }
-
-    // Initialize Google API when the script loads
-    const script = document.createElement('script');
-    script.src = 'https://apis.google.com/js/api.js';
-    script.onload = () => {
-        initGoogleClient();
-        // Also load the Picker API
-        gapi.load('picker', () => {});
-    };
-    document.head.appendChild(script);
-
-    // Add Google Sign-In/Out buttons if needed
-    const googleAuthContainer = document.getElementById('googleAuthContainer');
-    if (googleAuthContainer) {
-        googleAuthContainer.innerHTML = `
-            <button id="btnGoogleSignIn" class="btn btn-success">
-                <i class="fab fa-google"></i> Login Google Drive
-            </button>
-            <button id="btnGoogleSignOut" class="btn btn-danger">
-                <i class="fab fa-google"></i> Logout Google Drive
-            </button>
-        `;
+    // 7. Fungsi pengecekan API
+    async function checkAPIsReady() {
+        if (!isGoogleClientInitialized || !isPickerInitialized) {
+            await Swal.fire({
+                title: 'Memuat API...',
+                html: 'Harap tunggu sebentar',
+                timer: 2000,
+                didOpen: () => Swal.showLoading()
+            });
+            throw new Error('API belum siap');
+        }
         
-        document.getElementById('btnGoogleSignIn').addEventListener('click', handleGoogleSignIn);
-        document.getElementById('btnGoogleSignOut').addEventListener('click', handleGoogleSignOut);
+        if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+            await handleGoogleSignIn();
+            throw new Error('Harap login terlebih dahulu');
+        }
+    }
+
+    // 8. Inisialisasi awal
+    initializeGoogleAPIs().catch(error => {
+        console.error('Initialization failed:', error);
+        showError('Gagal memulai sistem backup: ' + error.message);
+    });
+
+    // 9. Event Listeners
+    document.getElementById('btnGoogleSignIn')?.addEventListener('click', handleGoogleSignIn);
+    document.getElementById('btnGoogleSignOut')?.addEventListener('click', () => gapi.auth2.getAuthInstance().signOut());
+    btnGoogleBackup?.addEventListener('click', backupToGoogleDrive);
+    btnGoogleImport?.addEventListener('click', importFromGoogleDrive);
+
+    // 10. Fungsi bantuan
+    function showError(message) {
+        Swal.fire('Error!', message, 'error');
     }
 });
