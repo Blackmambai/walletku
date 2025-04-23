@@ -738,6 +738,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </style>
 
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const backupManager = new GoogleDriveBackup({
+        clientId: '362387001717-qd55fokbba192mjd97t61b3jslbvqp47.apps.googleusercontent.com',
+        apiKey: 'AIzaSyCrnA2v4briyn9mUcRkMTcADdFJNa8CijQ'
+      });
+    });
+  </script>
+
+<script>
     // Fungsi untuk menutup modal
     function closeModal() {
       var modal = document.getElementById('premiumExpiredModal');
