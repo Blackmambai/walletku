@@ -353,8 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const googleAuthContainer = document.getElementById('googleAuthContainer');
     if (googleAuthContainer) {
         googleAuthContainer.innerHTML = `
-            <a id="btnGoogleSignIn" class="dropdown-item" href="#" style="border-radius: 16px;padding-top: 8px;padding-bottom: 8px;padding-right: 10px;padding-left: 10px;">Google Auth</a>
-            <a id="btnGoogleSignOut" class="dropdown-item" href="#" style="border-radius: 16px;padding-top: 8px;padding-bottom: 8px;padding-right: 10px;padding-left: 10px;">Google Auth</a>
+            <button id="btnGoogleSignIn" class="btn btn-success border rounded" style="border-radius: 16px;padding-top: 8px;padding-bottom: 8px;padding-right: 10px;padding-left: 10px;width: 100%;" data-google-action="backup"><i class="fas fa-sign-in-alt"></i> Sign In Google </button>
+            <button id="btnGoogleSignOut" class="btn btn-danger border rounded" style="border-radius: 16px;padding-top: 8px;padding-bottom: 8px;padding-right: 10px;padding-left: 10px;width: 100%;" data-google-action="backup"><i class="fas fa-sign-out-alt"></i> Logout Google</button>
         `;
         
         document.getElementById('btnGoogleSignIn').addEventListener('click', handleGoogleSignIn);
