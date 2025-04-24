@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const btnBackup = document.getElementById('btnBackup');
     const fileImport = document.getElementById('fileImport');
-    const btnImport = document.getElementById('btnImport');
     const aktifitasTerakhir = document.getElementById('aktifitasTerakhir');
     const kunjunganHariIni = document.getElementById('kunjunganHariIni');
     let grafikPenjualan = null;
