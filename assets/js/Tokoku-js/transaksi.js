@@ -159,8 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                 ${pengaturanToko.catatanKakiStruk || 'Terima Kasih Telah Berbelanja'}  
                             </p>
                             <div class="align-item-center">
-                            <p class="pre fas fa-lock" style="font-size: 0.7rem; color: #4a90e2; font-weight: 500; margin: 0;">  
-                                <i class="fas fa-wallet"></i> WalletKu.biz.id | Ahli mengatur toko dan keuangan  
+                            <p class="" style="font-size: 14px; color: #4a90e2; font-weight: 500; margin: 0;">  
+                                <i class="fas fa-wallet"></i> WalletKu.biz.id  
+                            </p>
+                            <p class="" style="font-size: 14px; color: #4a90e2; font-weight: 500; margin: 0;">  
+                                <i class=""></i>Ahli mengatur toko dan keuangan  
                             </p>
                             </div>
                         </div>  
