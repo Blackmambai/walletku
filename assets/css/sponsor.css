@@ -8,7 +8,7 @@
 
 .sponsor-track {
   display: inline-block;
-  animation: scroll 5s linear infinite;
+  animation: scroll 30s linear infinite;
 }
 
 .sponsor-item {
