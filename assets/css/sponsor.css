@@ -1,0 +1,52 @@
+.sponsor-container {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  padding: 20px 0;
+  background: #f8f9fa;
+}
+
+.sponsor-track {
+  display: inline-block;
+  animation: scroll 5s linear infinite;
+}
+
+.sponsor-item {
+  display: inline-block;
+  margin: 0 40px;
+  vertical-align: middle;
+}
+
+.sponsor-logo {
+  height: 60px;
+  width: auto;
+  max-width: 150px;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.sponsor-logo:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Untuk mengatasi jeda saat animasi diulang */
+
+.sponsor-track:hover {
+  animation-play-state: paused;
+}
+
+div {
+}
+

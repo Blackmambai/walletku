@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="col-md-4" style="padding: 5px;margin-bottom: 16px;">  
                 <div class="card summary-card paddingAll produk01" style="padding: 10px;">  
                     <div class="card-body" style="padding: 0px;">  
-                        <img src="${produk.fotoProduk || 'https://walletku.biz.id/assets/img/notfound.webp'}" class="card-img-top" alt="${produk.namaProduk}" style="border-radius: 16px 16px 0 0; object-fit: cover; height: 200px; margin-bottom: 16px;">  
+                        <img src="${produk.fotoProduk || 'https://walletku.biz.id/assets/img/image/notfound.webp'}" class="card-img-top" alt="${produk.namaProduk}" style="border-radius: 16px 16px 0 0; object-fit: cover; height: 200px; margin-bottom: 16px;">  
                         <h5 class="card-title" style="font-family: Nunito, sans-serif;font-size: 20px;font-weight: bold;">${produk.namaProduk}</h5>  
                         <p class="card-text" style="font-family: Nunito, sans-serif;font-size: 16px;color: rgb(43,43,44);font-weight: bold;">  
                             Harga: Rp ${produk.hargaJual.toLocaleString()}<br />  
