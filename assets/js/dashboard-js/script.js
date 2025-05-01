@@ -6,7 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
         currency: 'IDR',
         dateFormat: 'id-ID',
         csvFileName: 'WalletKu_backup',
-        categories: {
+        walletTypes: {
+            'cash': { name: 'Tunai', color: '#4361ee' },
+            'bank': { name: 'Bank', color: '#3f37c9' },
+            'savings': { name: 'Tabungan', color: '#4895ef' },
+            'investment': { name: 'Investasi', color: '#7209b7' },
+            'other': { name: 'Lainnya', color: '#8d99ae' }
+        },
+        defaultCategories: {
             income: [
                 { id: 'salary', name: 'Gaji', color: '#4cc9f0' },
                 { id: 'bonus', name: 'Bonus', color: '#4895ef' },
@@ -20,32 +27,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 { id: 'transport', name: 'Transportasi', color: '#b5179e' },
                 { id: 'shopping', name: 'Belanja', color: '#a30d79' },
                 { id: 'bill', name: 'Tagihan', color: '#893505' },
-                { id: 'Installment', name: 'Cicilan', color: '#148b01' },
+                { id: 'installment', name: 'Cicilan', color: '#148b01' },
                 { id: 'housing', name: 'Perumahan', color: '#7209b7' },
                 { id: 'utilities', name: 'Listrik/Air', color: '#560bad' },
                 { id: 'other-expense', name: 'Lainnya', color: '#480ca8' }
             ]
-        },
-        walletTypes: {
-            'cash': { name: 'Tunai', color: '#4361ee' },
-            'bank': { name: 'Bank', color: '#3f37c9' },
-            'savings': { name: 'Tabungan', color: '#4895ef' },
-            'investment': { name: 'Investasi', color: '#7209b7' },
-            'other': { name: 'Lainnya', color: '#8d99ae' }
         }
     };
 
-    // ======================
-    // INISIALISASI ELEMEN
-    // ======================
+    // ====================== //
+    // INISIALISASI ELEMEN   //
+    // ====================== //
     const DOM = {
-        // Modal
+        // Modal Elements
         transactionModal: document.getElementById('transactionModal') ? new bootstrap.Modal('#transactionModal') : null,
         walletModal: document.getElementById('walletModal') ? new bootstrap.Modal('#walletModal') : null,
+        categoryModal: document.getElementById('categoryModal') ? new bootstrap.Modal('#categoryModal') : null,
         confirmModal: document.getElementById('confirmModal') ? new bootstrap.Modal('#confirmModal') : null,
         importModal: document.getElementById('importModal') ? new bootstrap.Modal('#importModal') : null,
-        
-        // Form Transaksi
+
+        // Transaction Form
         transactionForm: document.getElementById('transaction-form'),
         transactionType: document.getElementById('transaction-type'),
         transactionWallet: document.getElementById('transaction-wallet'),
@@ -56,22 +57,33 @@ document.addEventListener('DOMContentLoaded', function() {
         transactionDesc: document.getElementById('transaction-description'),
         transactionCategory: document.getElementById('transaction-category'),
         submitTransactionBtn: document.getElementById('submit-transaction-btn'),
-        
-        // Form Dompet
+
+        // Wallet Form
         walletForm: document.getElementById('wallet-form'),
         walletName: document.getElementById('wallet-name'),
         walletType: document.getElementById('wallet-type'),
         walletBalance: document.getElementById('wallet-balance'),
         walletCurrency: document.getElementById('wallet-currency'),
         saveWalletBtn: document.getElementById('save-wallet-btn'),
-        
-        // Dashboard
+
+        // Category Management
+        manageCategoriesBtn: document.getElementById('manage-categories-btn'),
+        incomeCategoryForm: document.getElementById('income-category-form'),
+        expenseCategoryForm: document.getElementById('expense-category-form'),
+        incomeCategoryName: document.getElementById('income-category-name'),
+        expenseCategoryName: document.getElementById('expense-category-name'),
+        incomeCategoryColor: document.getElementById('income-category-color'),
+        expenseCategoryColor: document.getElementById('expense-category-color'),
+        incomeCategoriesList: document.getElementById('income-categories-list'),
+        expenseCategoriesList: document.getElementById('expense-categories-list'),
+
+        // Dashboard Elements
         totalBalance: document.getElementById('total-balance'),
         totalIncome: document.getElementById('total-income'),
         totalExpense: document.getElementById('total-expense'),
         walletsContainer: document.getElementById('wallets-container'),
-        
-        // Laporan
+
+        // Report Elements
         reportPeriod: document.getElementById('report-period'),
         reportStartDate: document.getElementById('report-start-date'),
         reportEndDate: document.getElementById('report-end-date'),
@@ -85,15 +97,15 @@ document.addEventListener('DOMContentLoaded', function() {
         expenseChart: document.getElementById('expense-chart'),
         walletChart: document.getElementById('wallet-balance-chart'),
         monthlyComparisonChart: document.getElementById('monthly-comparison-chart'),
-        
-        // Riwayat Transaksi
+
+        // Transaction History
         filterDate: document.getElementById('filter-date'),
         filterType: document.getElementById('filter-type'),
         filterWallet: document.getElementById('filter-wallet'),
         filterBtn: document.getElementById('filter-btn'),
         resetFilters: document.getElementById('reset-filters'),
         transactionsList: document.getElementById('transactions-list'),
-        
+
         // Backup/Restore
         exportBtn: document.getElementById('export-btn'),
         importBtn: document.getElementById('import-btn'),
@@ -101,9 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
         importSubmit: document.getElementById('import-submit')
     };
 
-    // ======================
-    // STATE APLIKASI
-    // ======================
+    // ====================== //
+    // STATE APLIKASI        //
+    // ====================== //
     const STATE = {
         editId: null,
         currentTransactionType: null,
@@ -113,13 +125,18 @@ document.addEventListener('DOMContentLoaded', function() {
             wallet: null,
             monthlyComparison: null
         },
-        confirmCallback: null
+        confirmCallback: null,
+        editingCategory: {
+            type: null,
+            id: null
+        }
     };
 
-    // ======================
-    // FUNGSI UTILITAS
-    // ======================
+    // ====================== //
+    // FUNGSI UTILITAS       //
+    // ====================== //
     const utils = {
+        // Format currency
         formatCurrency: (amount) => {
             return new Intl.NumberFormat(CONFIG.dateFormat, {
                 style: 'currency',
@@ -127,7 +144,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 minimumFractionDigits: 0
             }).format(amount);
         },
-        
+
+        // Format date
         formatDate: (dateString) => {
             const date = new Date(dateString);
             return date.toLocaleDateString(CONFIG.dateFormat, {
@@ -136,7 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 year: 'numeric'
             });
         },
-        
+
+        // Show notification
         showNotification: (message, type = 'success') => {
             Swal.fire({
                 icon: type === 'success' ? 'success' : 'error',
@@ -149,12 +168,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 timerProgressBar: true,
             });
         },
-        
+
+        // Get wallet by ID
         getWalletById: (id) => {
             const wallets = utils.getData('wallets');
             return wallets.find(w => w.id === id);
         },
-        
+
+        // Get data from localStorage
         getData: (key) => {
             const data = localStorage.getItem(key);
             try {
@@ -164,7 +185,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return [];
             }
         },
-        
+
+        // Save data to localStorage
         saveData: (key, data) => {
             try {
                 localStorage.setItem(key, JSON.stringify(data));
@@ -175,7 +197,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return false;
             }
         },
-        
+
+        // Calculate wallet balance
         calculateWalletBalance: (walletId) => {
             const wallets = utils.getData('wallets');
             const transactions = utils.getData('transactions');
@@ -199,23 +222,23 @@ document.addEventListener('DOMContentLoaded', function() {
             
             return balance;
         },
-        
+
+        // Check wallet balance
         checkWalletBalance: (walletId, amount) => {
             const balance = utils.calculateWalletBalance(walletId);
             return balance >= amount;
         },
-        
+
+        // Get current month data
         getCurrentMonthData: () => {
             const now = new Date();
-            const currentMonth = now.getMonth();
-            const currentYear = now.getFullYear();
-            
             return {
-                month: currentMonth,
-                year: currentYear
+                month: now.getMonth(),
+                year: now.getFullYear()
             };
         },
-        
+
+        // Get last month data
         getLastMonthData: () => {
             const now = new Date();
             let lastMonth = now.getMonth() - 1;
@@ -231,7 +254,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 year: year
             };
         },
-        
+
+        // Confirm dialog
         confirm: (message, callback) => {
             Swal.fire({
                 title: 'Konfirmasi',
@@ -248,24 +272,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         },
-        
+
+        // Export to CSV
         exportToCSV: function() {
             try {
                 const wallets = utils.getData('wallets');
                 const transactions = utils.getData('transactions');
+                const incomeCategories = utils.getData('incomeCategories') || CONFIG.defaultCategories.income;
+                const expenseCategories = utils.getData('expenseCategories') || CONFIG.defaultCategories.expense;
                 
-                let walletsCSV = 'id,name,type,initialBalance,currency,createdAt\n';
+                // Prepare CSV data
+                let csvData = '=== WALLETS ===\n';
+                csvData += 'id,name,type,initialBalance,currency,createdAt\n';
                 wallets.forEach(wallet => {
-                    walletsCSV += `"${wallet.id}","${wallet.name}","${wallet.type}",${wallet.initialBalance},"${wallet.currency}","${wallet.createdAt}"\n`;
+                    csvData += `"${wallet.id}","${wallet.name}","${wallet.type}",${wallet.initialBalance},"${wallet.currency}","${wallet.createdAt}"\n`;
                 });
                 
-                let transactionsCSV = 'id,type,walletId,toWalletId,amount,date,description,category,createdAt\n';
+                csvData += '\n=== TRANSACTIONS ===\n';
+                csvData += 'id,type,walletId,toWalletId,amount,date,description,category,createdAt\n';
                 transactions.forEach(trans => {
-                    transactionsCSV += `"${trans.id}","${trans.type}","${trans.walletId}","${trans.toWalletId || ''}",${trans.amount},"${trans.date}","${trans.description}","${trans.category || ''}","${trans.createdAt}"\n`;
+                    csvData += `"${trans.id}","${trans.type}","${trans.walletId}","${trans.toWalletId || ''}",${trans.amount},"${trans.date}","${trans.description}","${trans.category || ''}","${trans.createdAt}"\n`;
                 });
                 
-                const csvData = `=== WALLETS ===\n${walletsCSV}\n=== TRANSACTIONS ===\n${transactionsCSV}`;
+                csvData += '\n=== INCOME CATEGORIES ===\n';
+                csvData += 'id,name,color\n';
+                incomeCategories.forEach(cat => {
+                    csvData += `"${cat.id}","${cat.name}","${cat.color}"\n`;
+                });
                 
+                csvData += '\n=== EXPENSE CATEGORIES ===\n';
+                csvData += 'id,name,color\n';
+                expenseCategories.forEach(cat => {
+                    csvData += `"${cat.id}","${cat.name}","${cat.color}"\n`;
+                });
+                
+                // Create and download CSV file
                 const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
@@ -283,24 +324,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 return false;
             }
         },
-        
+
+        // Import from CSV
         importFromCSV: function(file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const content = e.target.result;
                     const parts = content.split('=== WALLETS ===\n')[1].split('\n=== TRANSACTIONS ===\n');
-                    
-                    if (parts.length !== 2) {
-                        utils.showNotification('Format file backup tidak valid', 'danger');
-                        return;
-                    }
-                    
-                    const walletsCSV = parts[0];
-                    const transactionsCSV = parts[1];
+                    const transParts = parts[1].split('\n=== INCOME CATEGORIES ===\n');
+                    const incomeCatParts = transParts[1].split('\n=== EXPENSE CATEGORIES ===\n');
                     
                     // Parse wallets
-                    const walletLines = walletsCSV.split('\n').filter(line => line.trim() !== '');
+                    const walletLines = parts[0].split('\n').filter(line => line.trim() !== '');
                     const walletHeaders = walletLines[0].replace(/"/g, '').split(',');
                     const wallets = [];
                     
@@ -320,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     
                     // Parse transactions
-                    const transLines = transactionsCSV.split('\n').filter(line => line.trim() !== '');
+                    const transLines = transParts[0].split('\n').filter(line => line.trim() !== '');
                     const transHeaders = transLines[0].replace(/"/g, '').split(',');
                     const transactions = [];
                     
@@ -339,13 +375,63 @@ document.addEventListener('DOMContentLoaded', function() {
                         transactions.push(trans);
                     }
                     
-                    utils.confirm(`Anda akan mengimpor ${wallets.length} dompet dan ${transactions.length} transaksi. Lanjutkan? Data sebelumnya akan diganti.`, () => {
-                        if (utils.saveData('wallets', wallets) && utils.saveData('transactions', transactions)) {
+                    // Parse income categories
+                    const incomeCatLines = incomeCatParts[0].split('\n').filter(line => line.trim() !== '');
+                    const incomeCatHeaders = incomeCatLines[0].replace(/"/g, '').split(',');
+                    const incomeCategories = [];
+                    
+                    for (let i = 1; i < incomeCatLines.length; i++) {
+                        const values = incomeCatLines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+                        if (!values || values.length !== incomeCatHeaders.length) continue;
+                        
+                        const cat = {};
+                        incomeCatHeaders.forEach((header, index) => {
+                            cat[header] = values[index].replace(/^"|"$/g, '');
+                        });
+                        incomeCategories.push(cat);
+                    }
+                    
+                    // Parse expense categories
+                    const expenseCatLines = incomeCatParts[1]?.split('\n').filter(line => line.trim() !== '') || [];
+                    const expenseCatHeaders = expenseCatLines[0]?.replace(/"/g, '').split(',') || [];
+                    const expenseCategories = [];
+                    
+                    for (let i = 1; i < expenseCatLines.length; i++) {
+                        const values = expenseCatLines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+                        if (!values || values.length !== expenseCatHeaders.length) continue;
+                        
+                        const cat = {};
+                        expenseCatHeaders.forEach((header, index) => {
+                            cat[header] = values[index].replace(/^"|"$/g, '');
+                        });
+                        expenseCategories.push(cat);
+                    }
+                    
+                    // Show confirmation dialog
+                    utils.confirm(`Anda akan mengimpor:
+                    <ul>
+                        <li>${wallets.length} dompet</li>
+                        <li>${transactions.length} transaksi</li>
+                        <li>${incomeCategories.length} kategori pemasukan</li>
+                        <li>${expenseCategories.length} kategori pengeluaran</li>
+                    </ul>
+                    Lanjutkan? Data sebelumnya akan diganti.`, () => {
+                        if (utils.saveData('wallets', wallets) && 
+                            utils.saveData('transactions', transactions) &&
+                            utils.saveData('incomeCategories', incomeCategories) &&
+                            utils.saveData('expenseCategories', expenseCategories)) {
                             utils.showNotification('Backup data berhasil diimpor');
                             app.loadWallets();
                             app.updateDashboard();
+                            app.renderCategoriesList('income');
+                            app.renderCategoriesList('expense');
+                            
                             if (DOM.generateReportBtn) {
                                 app.generateReport();
+                            }
+                            
+                            if (DOM.transactionsList) {
+                                app.loadTransactions();
                             }
                             
                             if (DOM.importModal) {
@@ -365,19 +451,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // ======================
-    // FUNGSI UTAMA
-    // ======================
+    // ====================== //
+    // FUNGSI UTAMA          //
+    // ====================== //
     const app = {
+        // Initialize application
         init: function() {
-            // Set tanggal default
+            // Set default dates
             const today = new Date().toISOString().split('T')[0];
             if (DOM.transactionDate) DOM.transactionDate.value = today;
             if (DOM.reportStartDate) DOM.reportStartDate.value = today;
             if (DOM.reportEndDate) DOM.reportEndDate.value = today;
             if (DOM.filterDate) DOM.filterDate.value = today;
             
-            // Inisialisasi data default jika belum ada
+            // Initialize default data if not exists
             if (!localStorage.getItem('wallets')) {
                 const defaultWallets = [
                     {
@@ -396,26 +483,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 utils.saveData('transactions', []);
             }
             
-            // Load data awal
+            if (!localStorage.getItem('incomeCategories')) {
+                utils.saveData('incomeCategories', CONFIG.defaultCategories.income);
+            }
+            
+            if (!localStorage.getItem('expenseCategories')) {
+                utils.saveData('expenseCategories', CONFIG.defaultCategories.expense);
+            }
+            
+            // Load initial data
             this.loadWallets();
             this.updateDashboard();
+            this.renderCategoriesList('income');
+            this.renderCategoriesList('expense');
             
             // Setup event listeners
             this.setupEventListeners();
             
-            // Generate laporan jika di halaman laporan
+            // Generate report if on report page
             if (DOM.generateReportBtn) {
                 this.generateReport();
             }
             
-            // Load transaksi jika di halaman riwayat
+            // Load transactions if on history page
             if (DOM.transactionsList) {
                 this.loadTransactions();
             }
         },
-        
+
+        // Setup event listeners
         setupEventListeners: function() {
-            // Transaction Form
+            // Transaction form
             if (DOM.transactionType) {
                 DOM.transactionType.addEventListener('change', this.handleTransactionTypeChange.bind(this));
             }
@@ -427,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             
-            // Wallet Form
+            // Wallet form
             if (DOM.saveWalletBtn) {
                 DOM.saveWalletBtn.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -435,7 +533,61 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             
-            // Report Controls
+            // Category management
+            if (DOM.manageCategoriesBtn) {
+                DOM.manageCategoriesBtn.addEventListener('click', () => {
+                    DOM.categoryModal.show();
+                });
+            }
+            
+            if (DOM.incomeCategoryForm) {
+                DOM.incomeCategoryForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveCategory('income');
+                });
+            }
+            
+            if (DOM.expenseCategoryForm) {
+                DOM.expenseCategoryForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveCategory('expense');
+                });
+            }
+            
+            // Event delegation for category actions
+            if (DOM.incomeCategoriesList) {
+                DOM.incomeCategoriesList.addEventListener('click', (e) => {
+                    const editBtn = e.target.closest('[data-action="edit-category"]');
+                    if (editBtn) {
+                        const categoryId = editBtn.getAttribute('data-id');
+                        this.editCategory('income', categoryId);
+                    }
+                    
+                    const deleteBtn = e.target.closest('[data-action="delete-category"]');
+                    if (deleteBtn) {
+                        const categoryId = deleteBtn.getAttribute('data-id');
+                        this.deleteCategory('income', categoryId);
+                    }
+                });
+            }
+            
+            if (DOM.expenseCategoriesList) {
+                DOM.expenseCategoriesList.addEventListener('click', (e) => {
+                    const editBtn = e.target.closest('[data-action="edit-category"]');
+                    if (editBtn) {
+                        const categoryId = editBtn.getAttribute('data-id');
+                        this.editCategory('expense', categoryId);
+                    }
+                    
+                    const deleteBtn = e.target.closest('[data-action="delete-category"]');
+                    if (deleteBtn) {
+                        const categoryId = deleteBtn.getAttribute('data-id');
+                        this.deleteCategory('expense', categoryId);
+                    }
+                });
+            }
+            
+            // Report controls
             if (DOM.reportPeriod) {
                 DOM.reportPeriod.addEventListener('change', this.handleReportPeriodChange.bind(this));
             }
@@ -444,7 +596,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 DOM.generateReportBtn.addEventListener('click', () => this.generateReport());
             }
             
-            // Riwayat Transaksi Controls
+            // Transaction history controls
             if (DOM.filterBtn) {
                 DOM.filterBtn.addEventListener('click', () => this.loadTransactions());
             }
@@ -508,13 +660,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         },
-        
+
+        // Load wallets
         loadWallets: function() {
             const wallets = utils.getData('wallets');
             
             if (!DOM.walletsContainer) return;
             
-            // Kosongkan container
             DOM.walletsContainer.innerHTML = '';
             
             if (wallets.length === 0) {
@@ -529,7 +681,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Render setiap dompet
             wallets.forEach(wallet => {
                 const balance = utils.calculateWalletBalance(wallet.id);
                 const walletEl = document.createElement('div');
@@ -557,118 +708,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 DOM.walletsContainer.appendChild(walletEl);
             });
             
-            // Update select options
             this.updateWalletSelectOptions();
         },
-        
-        loadTransactions: function() {
-            if (!DOM.transactionsList) return;
-            
-            const transactions = utils.getData('transactions');
-            const wallets = utils.getData('wallets');
-            const filterDate = DOM.filterDate ? DOM.filterDate.value : '';
-            const filterType = DOM.filterType ? DOM.filterType.value : '';
-            const filterWallet = DOM.filterWallet ? DOM.filterWallet.value : '';
-            
-            // Filter transaksi
-            let filteredTransactions = [...transactions];
-            
-            if (filterDate) {
-                filteredTransactions = filteredTransactions.filter(t => t.date.startsWith(filterDate));
-            }
-            
-            if (filterType) {
-                filteredTransactions = filteredTransactions.filter(t => t.type === filterType);
-            }
-            
-            if (filterWallet) {
-                filteredTransactions = filteredTransactions.filter(t => 
-                    t.walletId === filterWallet || t.toWalletId === filterWallet
-                );
-            }
-            
-            // Urutkan transaksi dari yang terbaru
-            filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            // Kosongkan daftar transaksi
-            DOM.transactionsList.innerHTML = '';
-            
-            if (filteredTransactions.length === 0) {
-                DOM.transactionsList.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="text-center py-4">Tidak ada transaksi</td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            // Kelompokkan transaksi per hari
-            const transactionsByDate = {};
-            filteredTransactions.forEach(t => {
-                const date = utils.formatDate(t.date);
-                if (!transactionsByDate[date]) {
-                    transactionsByDate[date] = [];
-                }
-                transactionsByDate[date].push(t);
-            });
-            
-            // Render transaksi
-            for (const [date, dailyTransactions] of Object.entries(transactionsByDate)) {
-                // Tambahkan header tanggal
-                const dateRow = document.createElement('tr');
-                dateRow.className = 'date-header';
-                dateRow.innerHTML = `
-                    <td colspan="6" class="fw-bold bg-light">${date}</td>
-                `;
-                DOM.transactionsList.appendChild(dateRow);
-                
-                // Tambahkan transaksi untuk tanggal tersebut
-                dailyTransactions.forEach(t => {
-                    const wallet = utils.getWalletById(t.walletId);
-                    const walletName = wallet ? wallet.name : 'Unknown';
-                    const toWallet = t.toWalletId ? utils.getWalletById(t.toWalletId) : null;
-                    const toWalletName = toWallet ? toWallet.name : '';
-                    
-                    const category = t.category ? 
-                        (t.type === 'income' ? 
-                            CONFIG.categories.income.find(c => c.id === t.category)?.name || t.category :
-                            CONFIG.categories.expense.find(c => c.id === t.category)?.name || t.category) :
-                        '-';
-                    
-                    const row = document.createElement('tr');
-                    row.className = `transaction-${t.type}`;
-                    
-                    row.innerHTML = `
-                        <td>${t.date.split('T')[1]?.slice(0, 5) || ''}</td>
-                        <td>${t.description || '-'}</td>
-                        <td>${walletName}${t.type === 'transfer' ? ` → ${toWalletName}` : ''}</td>
-                        <td>${category}</td>
-                        <td class="${t.type === 'income' ? 'text-success' : 
-                                      t.type === 'expense' ? 'text-danger' : 
-                                      'text-primary'}">
-                            ${t.type === 'income' ? '+' : 
-                              t.type === 'expense' ? '-' : '↔'} 
-                            ${utils.formatCurrency(t.amount)}
-                        </td>
-                        <td class="transaction-actions">
-                            <button data-action="edit-transaction" data-transaction-id="${t.id}" class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button data-action="delete-transaction" data-transaction-id="${t.id}" class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    `;
-                    
-                    DOM.transactionsList.appendChild(row);
-                });
-            }
-        },
-        
+
+        // Update wallet select options
         updateWalletSelectOptions: function() {
             const wallets = utils.getData('wallets');
             
-            // Update untuk form transaksi
+            // Update transaction wallet select
             if (DOM.transactionWallet) {
                 DOM.transactionWallet.innerHTML = '';
                 wallets.forEach(wallet => {
@@ -679,7 +726,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             
-            // Update untuk transfer
+            // Update transfer to select
             if (DOM.transferTo) {
                 DOM.transferTo.innerHTML = '';
                 wallets.forEach(wallet => {
@@ -690,7 +737,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             
-            // Update untuk filter
+            // Update filter wallet select
             if (DOM.filterWallet) {
                 DOM.filterWallet.innerHTML = '<option value="">Semua Dompet</option>';
                 wallets.forEach(wallet => {
@@ -701,9 +748,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         },
-        
+
+        // Save wallet
         saveWallet: function() {
-            // Validasi form
             if (!DOM.walletName.value || !DOM.walletName.value.trim()) {
                 Swal.fire({
                     icon: 'error',
@@ -714,7 +761,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Validasi saldo awal
             const initialBalance = parseFloat(DOM.walletBalance.value) || 0;
             if (isNaN(initialBalance)) {
                 Swal.fire({
@@ -735,21 +781,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 createdAt: new Date().toISOString()
             };
 
-            // Simpan ke localStorage
             const wallets = utils.getData('wallets');
             wallets.push(wallet);
             
             if (utils.saveData('wallets', wallets)) {
-                // Reset form
                 DOM.walletForm.reset();
-                DOM.walletBalance.value = '0'; // Set default value
+                DOM.walletBalance.value = '0';
                 
-                // Tutup modal
                 if (DOM.walletModal) {
                     DOM.walletModal.hide();
                 }
 
-                // Update UI
                 this.loadWallets();
                 this.updateDashboard();
                 
@@ -769,29 +811,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         },
-        
-        updateDashboard: function() {
-            const transactions = utils.getData('transactions');
-            const wallets = utils.getData('wallets');
-            
-            let totalIncome = 0;
-            let totalExpense = 0;
-            
-            transactions.forEach(t => {
-                if (t.type === 'income') totalIncome += t.amount;
-                if (t.type === 'expense') totalExpense += t.amount;
-            });
-            
-            let totalBalance = 0;
-            wallets.forEach(wallet => {
-                totalBalance += utils.calculateWalletBalance(wallet.id);
-            });
-            
-            if (DOM.totalBalance) DOM.totalBalance.textContent = utils.formatCurrency(totalBalance);
-            if (DOM.totalIncome) DOM.totalIncome.textContent = utils.formatCurrency(totalIncome);
-            if (DOM.totalExpense) DOM.totalExpense.textContent = utils.formatCurrency(totalExpense);
-        },
-        
+
+        // Delete wallet
         deleteWallet: function(walletId) {
             const wallet = utils.getWalletById(walletId);
             const currentBalance = utils.calculateWalletBalance(walletId);
@@ -822,14 +843,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     const wallets = utils.getData('wallets');
                     const updatedWallets = wallets.filter(w => w.id !== walletId);
                     
-                    // Hapus transaksi terkait dompet ini
                     const transactions = utils.getData('transactions');
                     const updatedTransactions = transactions.filter(t => 
                         t.walletId !== walletId && t.toWalletId !== walletId
                     );
                     
                     if (utils.saveData('wallets', updatedWallets) && utils.saveData('transactions', updatedTransactions)) {
-                        // Update UI
                         this.loadWallets();
                         this.updateDashboard();
                         
@@ -859,14 +878,143 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         },
-        
+
+        // Load transactions
+        loadTransactions: function() {
+            if (!DOM.transactionsList) return;
+            
+            const transactions = utils.getData('transactions');
+            const wallets = utils.getData('wallets');
+            const filterDate = DOM.filterDate ? DOM.filterDate.value : '';
+            const filterType = DOM.filterType ? DOM.filterType.value : '';
+            const filterWallet = DOM.filterWallet ? DOM.filterWallet.value : '';
+            
+            let filteredTransactions = [...transactions];
+            
+            if (filterDate) {
+                filteredTransactions = filteredTransactions.filter(t => t.date.startsWith(filterDate));
+            }
+            
+            if (filterType) {
+                filteredTransactions = filteredTransactions.filter(t => t.type === filterType);
+            }
+            
+            if (filterWallet) {
+                filteredTransactions = filteredTransactions.filter(t => 
+                    t.walletId === filterWallet || t.toWalletId === filterWallet
+                );
+            }
+            
+            filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            DOM.transactionsList.innerHTML = '';
+            
+            if (filteredTransactions.length === 0) {
+                DOM.transactionsList.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center py-4">Tidak ada transaksi</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            const transactionsByDate = {};
+            filteredTransactions.forEach(t => {
+                const date = utils.formatDate(t.date);
+                if (!transactionsByDate[date]) {
+                    transactionsByDate[date] = [];
+                }
+                transactionsByDate[date].push(t);
+            });
+            
+            for (const [date, dailyTransactions] of Object.entries(transactionsByDate)) {
+                const dateRow = document.createElement('tr');
+                dateRow.className = 'date-header';
+                dateRow.innerHTML = `
+                    <td colspan="6" class="fw-bold bg-light">${date}</td>
+                `;
+                DOM.transactionsList.appendChild(dateRow);
+                
+                dailyTransactions.forEach(t => {
+                    const wallet = utils.getWalletById(t.walletId);
+                    const walletName = wallet ? wallet.name : 'Unknown';
+                    const toWallet = t.toWalletId ? utils.getWalletById(t.toWalletId) : null;
+                    const toWalletName = toWallet ? toWallet.name : '';
+                    
+                    const incomeCategories = utils.getData('incomeCategories') || CONFIG.defaultCategories.income;
+                    const expenseCategories = utils.getData('expenseCategories') || CONFIG.defaultCategories.expense;
+                    
+                    let categoryName = '-';
+                    if (t.category) {
+                        if (t.type === 'income') {
+                            const category = incomeCategories.find(c => c.id === t.category);
+                            categoryName = category ? category.name : t.category;
+                        } else if (t.type === 'expense') {
+                            const category = expenseCategories.find(c => c.id === t.category);
+                            categoryName = category ? category.name : t.category;
+                        }
+                    }
+                    
+                    const row = document.createElement('tr');
+                    row.className = `transaction-${t.type}`;
+                    
+                    row.innerHTML = `
+                        <td>${t.date.split('T')[1]?.slice(0, 5) || ''}</td>
+                        <td>${t.description || '-'}</td>
+                        <td>${walletName}${t.type === 'transfer' ? ` → ${toWalletName}` : ''}</td>
+                        <td>${categoryName}</td>
+                        <td class="${t.type === 'income' ? 'text-success' : 
+                                      t.type === 'expense' ? 'text-danger' : 
+                                      'text-primary'}">
+                            ${t.type === 'income' ? '+' : 
+                              t.type === 'expense' ? '-' : '↔'} 
+                            ${utils.formatCurrency(t.amount)}
+                        </td>
+                        <td class="transaction-actions">
+                            <button data-action="edit-transaction" data-transaction-id="${t.id}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button data-action="delete-transaction" data-transaction-id="${t.id}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    
+                    DOM.transactionsList.appendChild(row);
+                });
+            }
+        },
+
+        // Update dashboard
+        updateDashboard: function() {
+            const transactions = utils.getData('transactions');
+            const wallets = utils.getData('wallets');
+            
+            let totalIncome = 0;
+            let totalExpense = 0;
+            
+            transactions.forEach(t => {
+                if (t.type === 'income') totalIncome += t.amount;
+                if (t.type === 'expense') totalExpense += t.amount;
+            });
+            
+            let totalBalance = 0;
+            wallets.forEach(wallet => {
+                totalBalance += utils.calculateWalletBalance(wallet.id);
+            });
+            
+            if (DOM.totalBalance) DOM.totalBalance.textContent = utils.formatCurrency(totalBalance);
+            if (DOM.totalIncome) DOM.totalIncome.textContent = utils.formatCurrency(totalIncome);
+            if (DOM.totalExpense) DOM.totalExpense.textContent = utils.formatCurrency(totalExpense);
+        },
+
+        // Show transaction form
         showTransactionForm: function(type, walletId = null) {
             if (!DOM.transactionModal) return;
             
             STATE.currentTransactionType = type;
             STATE.editId = null;
             
-            // Update judul modal
             const titleMap = {
                 'income': 'Tambah Pemasukan',
                 'expense': 'Tambah Pengeluaran',
@@ -874,26 +1022,20 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             document.getElementById('transactionModalLabel').textContent = titleMap[type] || 'Tambah Transaksi';
             
-            // Reset form
             DOM.transactionForm.reset();
-            
-            // Set nilai default
             DOM.transactionType.value = type;
             if (walletId) DOM.transactionWallet.value = walletId;
             DOM.transactionDate.value = new Date().toISOString().split('T')[0];
             
-            // Tampilkan/sembunyikan transfer container
             if (DOM.transferContainer) {
                 DOM.transferContainer.style.display = type === 'transfer' ? 'block' : 'none';
             }
             
-            // Load kategori
             this.loadCategories(type);
-            
-            // Tampilkan modal
             DOM.transactionModal.show();
         },
-        
+
+        // Edit transaction
         editTransaction: function(transactionId) {
             const transactions = utils.getData('transactions');
             const transaction = transactions.find(t => t.id === transactionId);
@@ -903,10 +1045,8 @@ document.addEventListener('DOMContentLoaded', function() {
             STATE.editId = transactionId;
             STATE.currentTransactionType = transaction.type;
             
-            // Update judul modal
             document.getElementById('transactionModalLabel').textContent = 'Edit Transaksi';
             
-            // Isi form
             DOM.transactionType.value = transaction.type;
             DOM.transactionWallet.value = transaction.walletId;
             DOM.transactionAmount.value = transaction.amount;
@@ -920,36 +1060,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 DOM.transferContainer.style.display = 'none';
             }
             
-            // Load kategori
             this.loadCategories(transaction.type);
             if (transaction.category) {
                 DOM.transactionCategory.value = transaction.category;
             }
             
-            // Tampilkan modal
             DOM.transactionModal.show();
         },
-        
+
+        // Handle transaction type change
         handleTransactionTypeChange: function() {
             const type = DOM.transactionType.value;
             STATE.currentTransactionType = type;
             
-            // Tampilkan/sembunyikan transfer container
             if (DOM.transferContainer) {
                 DOM.transferContainer.style.display = type === 'transfer' ? 'block' : 'none';
             }
             
-            // Load kategori
             this.loadCategories(type);
         },
-        
+
+        // Load categories
         loadCategories: function(type) {
             if (!DOM.transactionCategory) return;
             
             DOM.transactionCategory.innerHTML = '<option value="">Pilih Kategori (Opsional)</option>';
             
-            const categories = type === 'income' ? CONFIG.categories.income : 
-                             type === 'expense' ? CONFIG.categories.expense : [];
+            const categories = type === 'income' 
+                ? utils.getData('incomeCategories') || CONFIG.defaultCategories.income
+                : utils.getData('expenseCategories') || CONFIG.defaultCategories.expense;
             
             categories.forEach(cat => {
                 const option = document.createElement('option');
@@ -958,7 +1097,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 DOM.transactionCategory.appendChild(option);
             });
         },
-        
+
+        // Save transaction
         saveTransaction: function() {
             const transaction = {
                 type: DOM.transactionType.value,
@@ -970,7 +1110,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 createdAt: new Date().toISOString()
             };
             
-            // Validasi dasar
+            // Validation
             if (!transaction.walletId) {
                 Swal.fire({
                     icon: 'error',
@@ -1014,17 +1154,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
-            // Validasi saldo untuk expense/transfer
+            // Check balance for expense/transfer
             if (transaction.type === 'expense' || transaction.type === 'transfer') {
                 const wallet = utils.getWalletById(transaction.walletId);
-                const currentBalance = utils.calculateWalletBalance(transaction.walletId);
+                let currentBalance = utils.calculateWalletBalance(transaction.walletId);
                 
-                // Adjust balance jika dalam mode edit
+                // Adjust balance if editing
                 if (STATE.editId) {
                     const transactions = utils.getData('transactions');
                     const originalTransaction = transactions.find(t => t.id === STATE.editId);
                     if (originalTransaction && (originalTransaction.type === 'expense' || originalTransaction.type === 'transfer')) {
-                        currentBalance += originalTransaction.amount; // Kembalikan saldo sebelumnya
+                        currentBalance += originalTransaction.amount;
                     }
                 }
                 
@@ -1052,11 +1192,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
             
-            // Lanjutkan proses penyimpanan transaksi
+            // Save transaction
             const transactions = utils.getData('transactions');
             
             if (STATE.editId) {
-                // Update transaksi yang ada
                 const index = transactions.findIndex(t => t.id === STATE.editId);
                 if (index !== -1) {
                     transactions[index] = { ...transactions[index], ...transaction };
@@ -1069,7 +1208,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
             } else {
-                // Tambah transaksi baru
                 transaction.id = 'trans-' + Date.now();
                 transactions.push(transaction);
                 Swal.fire({
@@ -1082,7 +1220,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             if (utils.saveData('transactions', transactions)) {
-                // Reset form
                 DOM.transactionForm.reset();
                 STATE.editId = null;
                 
@@ -1090,7 +1227,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     DOM.transactionModal.hide();
                 }
                 
-                // Update UI
                 this.updateDashboard();
                 this.loadWallets();
                 
@@ -1110,14 +1246,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         },
-        
+
+        // Delete transaction
         deleteTransaction: function(transactionId) {
             utils.confirm('Apakah Anda yakin ingin menghapus transaksi ini?', () => {
                 const transactions = utils.getData('transactions');
                 const updatedTransactions = transactions.filter(t => t.id !== transactionId);
                 
                 if (utils.saveData('transactions', updatedTransactions)) {
-                    // Update UI
                     this.updateDashboard();
                     this.loadWallets();
                     
@@ -1135,7 +1271,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         },
-        
+
+        // Handle report period change
         handleReportPeriodChange: function() {
             if (DOM.reportPeriod && DOM.customDateRange) {
                 if (DOM.reportPeriod.value === 'custom') {
@@ -1145,7 +1282,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         },
-        
+
+        // Generate report
         generateReport: function() {
             if (!DOM.generateReportBtn) return;
             
@@ -1153,7 +1291,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const wallets = utils.getData('wallets');
             let filteredTransactions = [...transactions];
             
-            // Filter berdasarkan periode
+            // Filter by period
             const period = DOM.reportPeriod.value;
             const now = new Date();
             
@@ -1192,7 +1330,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             
-            // Hitung total
+            // Calculate totals
             let reportIncome = 0;
             let reportExpense = 0;
             
@@ -1201,7 +1339,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (t.type === 'expense') reportExpense += t.amount;
             });
             
-            // Tambahkan saldo awal dompet yang dibuat dalam periode ini
+            // Add initial balances of wallets created in this period
             if (period === 'month' || period === 'custom') {
                 const startDate = period === 'month' ? 
                     new Date(now.getFullYear(), now.getMonth(), 1) : 
@@ -1221,7 +1359,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const reportBalance = reportIncome - reportExpense;
             
-            // Hitung perubahan dari bulan lalu
+            // Calculate change from last month
             let lastMonthIncome = 0;
             let lastMonthExpense = 0;
             
@@ -1237,7 +1375,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
                 
-                // Tambahkan saldo awal dompet bulan lalu
+                // Add initial balances of wallets created last month
                 wallets.forEach(wallet => {
                     const walletDate = new Date(wallet.createdAt);
                     if (walletDate.getMonth() === lastMonthData.month && 
@@ -1252,7 +1390,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const changePercentage = lastMonthBalance !== 0 ? 
                 Math.round((balanceChange / Math.abs(lastMonthBalance)) * 100) : 0;
             
-            // Update tampilan
+            // Update UI
             if (DOM.reportIncome) DOM.reportIncome.textContent = utils.formatCurrency(reportIncome);
             if (DOM.reportExpense) DOM.reportExpense.textContent = utils.formatCurrency(reportExpense);
             if (DOM.reportBalance) DOM.reportBalance.textContent = utils.formatCurrency(reportBalance);
@@ -1265,7 +1403,8 @@ document.addEventListener('DOMContentLoaded', function() {
             this.generateCharts(filteredTransactions, wallets);
             this.generateMonthlyComparisonChart(transactions);
         },
-        
+
+        // Generate charts
         generateCharts: function(transactions, wallets) {
             // Income by Category
             const incomeByCategory = {};
@@ -1290,18 +1429,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 name: wallet.name,
                 balance: utils.calculateWalletBalance(wallet.id),
                 color: CONFIG.walletTypes[wallet.type]?.color || '#8d99ae'
-            })).filter(wallet => wallet.balance > 0); // Hanya tampilkan dompet dengan saldo positif
+            })).filter(wallet => wallet.balance > 0);
             
             // Render charts
             this.renderChart('income', incomeByCategory);
             this.renderChart('expense', expenseByCategory);
             this.renderWalletChart(walletBalances);
         },
-        
+
+        // Generate monthly comparison chart
         generateMonthlyComparisonChart: function(allTransactions) {
             if (!DOM.monthlyComparisonChart) return;
             
-            // Hancurkan chart sebelumnya jika ada
             if (STATE.chartInstances.monthlyComparison) {
                 STATE.chartInstances.monthlyComparison.destroy();
             }
@@ -1312,13 +1451,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const incomeData = [];
             const expenseData = [];
             
-            // Siapkan data untuk 6 bulan terakhir
+            // Prepare data for last 6 months
             for (let i = 5; i >= 0; i--) {
                 const date = new Date(currentYear, now.getMonth() - i, 1);
                 const monthName = date.toLocaleDateString('id-ID', { month: 'short' });
                 months.push(monthName);
                 
-                // Hitung pemasukan dan pengeluaran untuk bulan ini
                 let monthIncome = 0;
                 let monthExpense = 0;
                 
@@ -1331,7 +1469,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
                 
-                // Tambahkan saldo awal dompet yang dibuat bulan ini
+                // Add initial balances of wallets created this month
                 const wallets = utils.getData('wallets');
                 wallets.forEach(wallet => {
                     const walletDate = new Date(wallet.createdAt);
@@ -1393,17 +1531,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         },
-        
+
+        // Render chart
         renderChart: function(type, data) {
             const ctx = type === 'income' ? DOM.incomeChart : DOM.expenseChart;
             if (!ctx) return;
             
-            // Hancurkan chart sebelumnya jika ada
             if (STATE.chartInstances[type]) {
                 STATE.chartInstances[type].destroy();
             }
             
-            const categories = CONFIG.categories[type];
+            const categories = type === 'income' 
+                ? utils.getData('incomeCategories') || CONFIG.defaultCategories.income
+                : utils.getData('expenseCategories') || CONFIG.defaultCategories.expense;
+            
             const labels = [];
             const amounts = [];
             const colors = [];
@@ -1453,7 +1594,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         },
-        
+
+        // Render wallet chart
         renderWalletChart: function(walletData) {
             if (!DOM.walletChart) return;
             
@@ -1504,10 +1646,172 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             });
+        },
+
+        // Save category
+        saveCategory: function(type) {
+            const form = type === 'income' ? DOM.incomeCategoryForm : DOM.expenseCategoryForm;
+            const nameInput = type === 'income' ? DOM.incomeCategoryName : DOM.expenseCategoryName;
+            const colorInput = type === 'income' ? DOM.incomeCategoryColor : DOM.expenseCategoryColor;
+            
+            const name = nameInput.value.trim();
+            const color = colorInput.value;
+            
+            if (!name) {
+                utils.showNotification('Nama kategori wajib diisi', 'error');
+                return;
+            }
+            
+            const categoriesKey = type === 'income' ? 'incomeCategories' : 'expenseCategories';
+            const categories = utils.getData(categoriesKey) || [];
+            
+            // If editing
+            if (STATE.editingCategory.type === type && STATE.editingCategory.id) {
+                const categoryIndex = categories.findIndex(c => c.id === STATE.editingCategory.id);
+                if (categoryIndex !== -1) {
+                    // Check for duplicate (except itself)
+                    const duplicate = categories.some((c, i) => 
+                        i !== categoryIndex && c.name.toLowerCase() === name.toLowerCase()
+                    );
+                    
+                    if (duplicate) {
+                        utils.showNotification('Kategori sudah ada', 'error');
+                        return;
+                    }
+                    
+                    categories[categoryIndex] = {
+                        ...categories[categoryIndex],
+                        name: name,
+                        color: color
+                    };
+                    
+                    if (utils.saveData(categoriesKey, categories)) {
+                        utils.showNotification('Kategori berhasil diperbarui');
+                        form.reset();
+                        STATE.editingCategory = { type: null, id: null };
+                        form.querySelector('button[type="submit"]').textContent = 'Tambah Kategori';
+                        this.renderCategoriesList(type);
+                        this.loadCategories(type);
+                        
+                        // Update transactions if category name changed
+                        if (DOM.transactionsList) {
+                            this.loadTransactions();
+                        }
+                        
+                        if (DOM.generateReportBtn) {
+                            this.generateReport();
+                        }
+                    }
+                }
+                return;
+            }
+            
+            // If adding new
+            const exists = categories.some(c => c.name.toLowerCase() === name.toLowerCase());
+            if (exists) {
+                utils.showNotification('Kategori sudah ada', 'error');
+                return;
+            }
+            
+            const newCategory = {
+                id: name.toLowerCase().replace(/\s+/g, '-'),
+                name: name,
+                color: color
+            };
+            
+            categories.push(newCategory);
+            if (utils.saveData(categoriesKey, categories)) {
+                utils.showNotification('Kategori berhasil ditambahkan');
+                form.reset();
+                this.renderCategoriesList(type);
+                this.loadCategories(type);
+            }
+        },
+
+        // Edit category
+        editCategory: function(type, categoryId) {
+            const categories = utils.getData(type === 'income' ? 'incomeCategories' : 'expenseCategories') || [];
+            const category = categories.find(c => c.id === categoryId);
+            
+            if (category) {
+                STATE.editingCategory = { type, id: categoryId };
+                
+                const form = type === 'income' ? DOM.incomeCategoryForm : DOM.expenseCategoryForm;
+                const nameInput = type === 'income' ? DOM.incomeCategoryName : DOM.expenseCategoryName;
+                const colorInput = type === 'income' ? DOM.incomeCategoryColor : DOM.expenseCategoryColor;
+                
+                nameInput.value = category.name;
+                colorInput.value = category.color;
+                form.querySelector('button[type="submit"]').textContent = 'Simpan Perubahan';
+            }
+        },
+
+        // Delete category
+        deleteCategory: function(type, categoryId) {
+            utils.confirm(`Hapus kategori ini? Transaksi dengan kategori ini akan diubah menjadi "Lainnya"`, () => {
+                const categoriesKey = type === 'income' ? 'incomeCategories' : 'expenseCategories';
+                const categories = (utils.getData(categoriesKey) || []).filter(c => c.id !== categoryId);
+                
+                // Update transactions that use this category
+                const transactions = utils.getData('transactions');
+                const updatedTransactions = transactions.map(t => {
+                    if (t.type === type && t.category === categoryId) {
+                        return {
+                            ...t,
+                            category: type === 'income' ? 'other-income' : 'other-expense'
+                        };
+                    }
+                    return t;
+                });
+                
+                if (utils.saveData(categoriesKey, categories) && utils.saveData('transactions', updatedTransactions)) {
+                    this.renderCategoriesList(type);
+                    this.loadCategories(type);
+                    
+                    if (DOM.transactionsList) {
+                        this.loadTransactions();
+                    }
+                    
+                    if (DOM.generateReportBtn) {
+                        this.generateReport();
+                    }
+                    
+                    utils.showNotification('Kategori dihapus');
+                }
+            });
+        },
+
+        // Render categories list
+        renderCategoriesList: function(type) {
+            const categories = utils.getData(type === 'income' ? 'incomeCategories' : 'expenseCategories') || [];
+            const container = type === 'income' ? DOM.incomeCategoriesList : DOM.expenseCategoriesList;
+            
+            container.innerHTML = categories.map(cat => `
+                <div class="category-item d-flex justify-content-between align-items-center mb-2 p-2 border rounded">
+                    <div class="d-flex align-items-center">
+                        <span class="color-badge me-2" style="background: ${cat.color}; width: 20px; height: 20px; border-radius: 50%;"></span>
+                        <span>${cat.name}</span>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-warning me-2" 
+                            data-action="edit-category" 
+                            data-type="${type}" 
+                            data-id="${cat.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" 
+                            data-action="delete-category" 
+                            data-type="${type}" 
+                            data-id="${cat.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
     };
 
-    // Inisialisasi aplikasi
+    // Initialize the application
     app.init();
     window.app = app;
 });
