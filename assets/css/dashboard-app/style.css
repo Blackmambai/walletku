@@ -758,7 +758,7 @@ tr:hover {
 
 @media (max-width: 480px) {
   .header-actions button {
-    margin-left: 0;
+    margin-left: 10px;
     width: 48%;
   }
 }
