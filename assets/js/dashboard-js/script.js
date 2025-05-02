@@ -408,30 +408,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     
                     // Show confirmation dialog
-                    utils.confirm(`Anda akan mengimpor:
-                    <ul>
-                        <li>${wallets.length} dompet</li>
-                        <li>${transactions.length} transaksi</li>
-                        <li>${incomeCategories.length} kategori pemasukan</li>
-                        <li>${expenseCategories.length} kategori pengeluaran</li>
-                    </ul>
-                    Lanjutkan? Data sebelumnya akan diganti.`, () => {
-                        if (utils.saveData('wallets', wallets) && 
-                            utils.saveData('transactions', transactions) &&
-                            utils.saveData('incomeCategories', incomeCategories) &&
-                            utils.saveData('expenseCategories', expenseCategories)) {
+                    utils.confirm(`Anda akan mengimpor ${wallets.length} dompet dan ${transactions.length} transaksi. Lanjutkan? Data sebelumnya akan diganti.`, () => {
+                        if (utils.saveData('wallets', wallets) && utils.saveData('transactions', transactions)) {
                             utils.showNotification('Backup data berhasil diimpor');
                             app.loadWallets();
                             app.updateDashboard();
-                            app.renderCategoriesList('income');
-                            app.renderCategoriesList('expense');
-                            
                             if (DOM.generateReportBtn) {
                                 app.generateReport();
-                            }
-                            
-                            if (DOM.transactionsList) {
-                                app.loadTransactions();
                             }
                             
                             if (DOM.importModal) {
